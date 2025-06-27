@@ -11,7 +11,7 @@ Note: All of the diagrams you see here are generated using Maestro for PostgreSQ
 ## 2. Database Architecture
 
 
-![ER Diagram](/diagrams/original_schema_overview.jpeg)
+![ER Diagram](./diagrams/original_schema_overview.jpeg)
 The deletion engine is built around a Stack Overflow–style relational schema with well-defined foreign key relationships. The core tables and their interactions can be summarized as follows:
 
 
