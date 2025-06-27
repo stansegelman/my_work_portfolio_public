@@ -11,7 +11,7 @@ Note: All of the diagrams you see here are generated using Maestro for PostgreSQ
 ## 2. Database Architecture
 
 
-![ER Diagram](../diagrams/original_schema_overview.jpeg)
+![ER Diagram](/diagrams/original_schema_overview.jpeg)
 The deletion engine is built around a Stack Overflow–style relational schema with well-defined foreign key relationships. The core tables and their interactions can be summarized as follows:
 
 
@@ -299,7 +299,7 @@ LANGUAGE 'plpgsql';
 
 ## 5. Example of Generated SQL Output with Graph
 
-![Flow Diagram](../diagrams/relationship_delete.jpeg)
+![Flow Diagram](/diagrams/relationship_delete.jpeg)
 
 ```
 
@@ -323,9 +323,9 @@ WHERE EXISTS (
 ## 6. Database Volume and Index Overview
 
 
-![Table Sizes ](../diagrams/relation_sizes.jpg)
+![Table Sizes ](/diagrams/relation_sizes.jpg)
 
-![Row Counts ](../diagrams/relation_counts.jpg)
+![Row Counts ](/diagrams/relation_counts.jpg)
 
 ## 7. Query Execution time 47.800 seconds 
 
