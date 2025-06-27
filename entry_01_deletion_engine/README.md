@@ -299,7 +299,7 @@ LANGUAGE 'plpgsql';
 
 ## 5. Example of Generated SQL Output with Graph
 
-![Flow Diagram](/diagrams/relationship_delete.jpeg)
+![Flow Diagram](./diagrams/relationship_delete.jpeg)
 
 ```
 
@@ -323,9 +323,9 @@ WHERE EXISTS (
 ## 6. Database Volume and Index Overview
 
 
-![Table Sizes ](/diagrams/relation_sizes.jpg)
+![Table Sizes ](./diagrams/relation_sizes.jpg)
 
-![Row Counts ](/diagrams/relation_counts.jpg)
+![Row Counts ](./diagrams/relation_counts.jpg)
 
 ## 7. Query Execution time 47.800 seconds 
 
