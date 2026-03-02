@@ -43,7 +43,7 @@ In the StackOverflow schema, both questions and answers are stored in posts tabl
 
 Implementation (materialize counts table).
 The following query materializes a staging table with one row per accepted answer [votes or comments].postid = acceptedanswerid and two engagement metrics: total votes and total comments. Because both votes and comments are one-to-many relative to an answer, COUNT(DISTINCT ...) is used to prevent multiplicative inflation when joining both fact tables in a single query.
-
+````sql
 -- calculate counts for votes and comments for accepted answers
 -- for questions created one year from the last date
 -- last date is '2022-06-05 06:39:59.28'
@@ -68,7 +68,7 @@ WHERE p.creationdate BETWEEN params.max_ts - interval '1 year' AND params.max_ts
   AND p.acceptedanswerid > 0
   AND p.posttypeid = 1
 GROUP BY p.acceptedanswerid;
-
+````
 
 Output.
 Step 1 produces votes_comments_per_answer_counts(postid, votes_cnt, comments_cnt), which Step 2 consumes to derive vote tiers and comment engagement tiers (the first-layer sub-segments).
