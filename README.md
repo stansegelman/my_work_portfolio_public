@@ -21,6 +21,7 @@ I'm a hands-on developer who works from first principles. I’ve been the person
 | 00    | [Original Schema](entry_00_original_schema/)   | Subset of the actual Stack Overflow schema used in all entries          |
 | 01    | [PostgreSQL Deletion Engine](entry_01_deletion_engine/) | Recursive, dependency-safe deletion of all user-related data            |
 | 02    | [Historical Table Structuring](entry_02_hist_struct/)   | Partitioned archival system designed for performance and retention control |
+| 03    | [Segment Set Matrices](entry_03_segment_set_matrices/)   | System that converts StackOverflow segments into structured set-based matrices for analysis|
 
 ---
 
