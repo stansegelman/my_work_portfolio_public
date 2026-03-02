@@ -72,4 +72,4 @@ GROUP BY p.acceptedanswerid;
 
 Output.
 Step 1 produces votes_comments_per_answer_counts(postid, votes_cnt, comments_cnt), which Step 2 consumes to derive vote tiers and comment engagement tiers (the first-layer sub-segments).
-- ![Sample Output](./diagrams/output1.jpeg)
+- ![Sample Output](./diagrams/output1.jpg)
