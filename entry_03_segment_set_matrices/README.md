@@ -1,16 +1,24 @@
 # Portfolio Entry #2 – Partitioned Archival Schema for StackOverflow-style Dataset
 
-## Overview
+## Objective
 
-This project introduces a historical archive system (`hist` schema) designed to optimize long-term data retention, deletion, and analysis for a StackOverflow-style relational database. The system duplicates critical entities such as `posts`, `comments`, `votes`, `tags`, `badges`, and user-related tables from the primary `public` schema, enabling safe, partition-aware archiving.
+Construct a segment set relationship matrix over a time-scoped population of posts. Segment membership is represented as boolean flags (sub-segments and derived compound segments). The final deliverable is a matrix that quantifies relationships between every pair of segments, including:
+
+Intersection counts: |A ∩ B|
+
+Union counts: |A ∪ B|
+
+Set difference counts: |A \ B|
+
+This matrix provides a high-level “map” of segment overlap, exclusivity, and subset relationships, and serves as a validation artifact for the segmentation rules.
+
 Note: All of the diagrams you see here are generated using Maestro for PostgreSQL, their link https://www.sqlmaestro.com/products/postgresql/maestro/
 ## Diagrams & Graphs
 
 Orignal
 - ![ERD: `public` schema structure](./diagrams/original_schema_overview.jpeg)
 
-Alternative
-- ![ERD: `hist` schema with partition logic](./diagrams/alternate_schema_hist.jpeg)
+
 
 
 ## Key Features
