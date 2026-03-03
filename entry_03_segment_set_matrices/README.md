@@ -223,8 +223,7 @@ SELECT COUNT(CASE WHEN comments_sub_seg = 'high_engagement' THEN answerid END)  
 FROM sub_segments;
 ```
 Sample output (segment cardinalities)
-seg1   seg2    seg3    seg4   seg5    seg6    seg7  seg8   seg9   seg10   seg11   seg12
-42916  393315  123868  70027  166606  323466  7459  43754  75966  220875  128686  8832
+- ![Sample Output](./diagrams/output4.jpg)
 
 These totals act as the expected diagonal values for the segment intersection matrix constructed in the next section.
 
@@ -412,13 +411,13 @@ Output.
 This step produces the three final matrix tables:
 
 segment_matrix_intersect — |A ∩ B|
-- ![Sample Output](./diagrams/output4.jpg)
-
-segment_matrix_union — |A ∪ B|
 - ![Sample Output](./diagrams/output5.jpg)
 
-segment_matrix_minus — |A \ B|
+segment_matrix_union — |A ∪ B|
 - ![Sample Output](./diagrams/output6.jpg)
+
+segment_matrix_minus — |A \ B|
+- ![Sample Output](./diagrams/output7.jpg)
 
 These are the core artifacts referenced throughout the analysis and are validated using the totals table from Section 3 (diagonal checks) and symmetry expectations (where applicable).
 
