@@ -73,3 +73,64 @@ GROUP BY p.acceptedanswerid;
 Output.
 Step 1 produces votes_comments_per_answer_counts(postid, votes_cnt, comments_cnt), which Step 2 consumes to derive vote tiers and comment engagement tiers (the first-layer sub-segments).
 - ![Sample Output](./diagrams/output1.jpg)
+
+## Step 2 — Derive percentile-based sub-segments (vote tier + comment engagement)
+
+With the base engagement counts available (votes_comments_per_answer_counts), the next step is to classify each accepted answer (answerid) into sub-segments. These sub-segments are the primitive building blocks used later to construct boolean segment membership and generate the segment relationship matrix.
+
+Approach.
+Sub-segment boundaries are derived from the empirical distribution of the cohort using percentile_disc. For transparency, the 0th and 100th percentiles are included alongside the internal cut points to make the full range explicit.
+
+Vote tiers are defined using the 60th and 90th percentiles:
+
+low_vote_tier: [p0, p60)
+
+middle_vote_tier: [p60, p90)
+
+high_vote_tier: [p90, p100]
+
+Comment engagement tiers are defined using the 80th and 93rd percentiles:
+
+low_engagement: [p0, p80)
+
+moderate_engagement: [p80, p93)
+
+high_engagement: [p93, p100]
+
+Each answerid receives both a vote-tier label and a comment-engagement label, producing a compact categorical representation for downstream segment logic.
+
+Implementation (materialize sub-segments table).
+````sql
+DROP TABLE IF EXISTS sub_segments;
+CREATE TEMP TABLE sub_segments
+AS
+WITH percentiles AS (
+SELECT
+    percentile_disc(0.00) WITHIN GROUP (ORDER BY votes_cnt) AS p0_votes,
+    percentile_disc(0.60) WITHIN GROUP (ORDER BY votes_cnt) AS p60_votes,
+    percentile_disc(0.90) WITHIN GROUP (ORDER BY votes_cnt) AS p90_votes,
+	  percentile_disc(1.00) WITHIN GROUP (ORDER BY votes_cnt) AS p100_votes,
+	  percentile_disc(0.00) WITHIN GROUP (ORDER BY comments_cnt) AS p0_comments,
+	  percentile_disc(0.80) WITHIN GROUP (ORDER BY comments_cnt) AS p80_comments,
+    percentile_disc(0.93) WITHIN GROUP (ORDER BY comments_cnt) AS p93_comments,
+	  percentile_disc(1.00) WITHIN GROUP (ORDER BY comments_cnt) AS p100_comments
+  FROM votes_comments_per_answer_counts
+ )
+ 	--Calculate sub-segments
+SELECT  answerid,
+		votes_cnt,
+		comments_cnt,
+CASE WHEN votes_cnt >=p0_votes AND votes_cnt < p60_votes THEN 'low_vote_tier'
+     WHEN votes_cnt >= p60_votes AND votes_cnt < p90_votes THEN 'middle_vote_tier'
+	 WHEN votes_cnt >= p90_votes AND votes_cnt <= p100_votes THEN 'high_vote_tier' END votes_sub_seg,
+CASE WHEN comments_cnt >= p0_comments AND comments_cnt < p80_comments THEN 'low_engagement'
+     WHEN comments_cnt >= p80_comments and comments_cnt < p93_comments THEN 'moderate_engagement'
+	 WHEN comments_cnt >= p93_comments AND comments_cnt <= p100_comments THEN 'high_engagement' END comments_sub_seg	 
+FROM votes_comments_per_answer_counts CROSS JOIN percentiles;
+````
+To make the tier boundaries explicit, the query below emits the percentile cut points used for classification. In the sample run shown here, the minimum values for both metrics were 0, but p0_* should be interpreted as the minimum observed count (not inherently “zero”).
+- ![Sample Output](./diagrams/output3.jpg)
+
+Output.
+This step produces sub_segments(postid, votes_cnt, comments_cnt, votes_sub_seg, comments_sub_seg). These categorical sub-segments are used in the next section to define compound segments and produce boolean membership vectors suitable for matrix-based set operations.
+- ![Sample Output](./diagrams/output2.jpg)
