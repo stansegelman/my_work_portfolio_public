@@ -419,7 +419,7 @@ segment_matrix_union — |A ∪ B|
 segment_matrix_minus — |A \ B|
 - ![Sample Output](./diagrams/output7.jpg)
 
-These are the core artifacts referenced throughout the analysis and are validated using the totals table from Step 4 (diagonal checks) [Go to Step 4](#Step-4-—-Materialize segment-totals-for-matrix-validation) and symmetry expectations (where applicable).
+These are the core artifacts referenced throughout the analysis and are validated using the totals table from Step 4 (diagonal checks) [Go to Step 4](#Step-4--Materialize segment-totals-for-matrix-validation) and symmetry expectations (where applicable).
 
 Sample output (intersection matrix)
 
