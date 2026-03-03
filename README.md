@@ -33,7 +33,7 @@ I'm a hands-on developer who works from first principles. I’ve been the person
 
 ## 📫 Contact
 
-- 📧 Email: [stanislav.segelman@gmail.com](mailto:stanislav.segelman@gmail.com)
+- 📧 Email: [stanislav.segelman@gmail.com](mailto:stansegelman@gmail.com)
 - 🌐 Location: Akron, Ohio (remote-friendly)
 - 🛠 GitHub: [github.com/stansegelman](https://github.com/stansegelman)
 
