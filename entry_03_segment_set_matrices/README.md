@@ -420,160 +420,85 @@ segment_matrix_minus — |A \ B|
 - ![Sample Output](./diagrams/output7.jpg)
 
 These are the core artifacts referenced throughout the analysis and are validated using the totals table from Step 4 (diagonal checks) [Go to Step 4](#step-4--materialize-segment-totals-for-matrix-validation) and symmetry expectations (where applicable).
+Here is the diagram from step 4 again:
+- ![Sample Output](./diagrams/output4.jpg)
 
-Sample output (intersection matrix)
+Matrix Validation — Structural Observations (with numeric proofs)
 
-The segment_matrix_intersect table stores pairwise intersection counts 
-∣A∩B∣
-∣A∩B∣ between every segment (rows = A, columns = B). The diagonal represents each segment’s cardinality because 
-∣A∩A∣=∣A∣
-∣A∩A∣=∣A∣. Off-diagonal values quantify overlap; zeros indicate disjoint segments.
+After materializing the three set-operation matrices (INTERSECT, UNION, MINUS), the outputs exhibit the expected algebraic identities and reveal real structure in the segmentation.
 
-segment  seg1   seg2    seg3    seg4   seg5    seg6    seg7  seg8   seg9   seg10   seg11   seg12
-seg1     42916  0       0       7459   8832    26625   7459  0      0      0       0       8832
-seg2     0      393315  0       43754  128686  220875  0     43754  0      220875  128686  0
-seg3     0      0       123868  18814  29088   75966   0     0      75966  0       0       0
-seg4     7459   43754   18814   70027  0       0       7459  43754  0      0       0       0
-seg5     8832   128686  29088   0      166606  0       0     0      0      0       128686  8832
-seg6     26625  220875  75966   0      0       323466  0     0      75966  220875  0       0
-seg7     7459   0       0       7459   0       0       7459  0      0      0       0       0
-seg8     0      43754   0       43754  0       0       0     43754  0      0       0       0
-seg9     0      0       75966   0      0       75966   0     0      75966  0       0       0
-seg10    0      220875  0       0      0       220875  0     0      0      220875  0       0
-seg11    0      128686  0       0      128686  0       0     0      0      0       128686  0
-seg12    8832   0       0       0      8832    0       0     0      0      0       0       8832
+1. Identity checks (sanity)
 
-Interpretation notes.
+Intersection diagonal equals segment total:
+Example: |seg2 ∩ seg2| = 393,315 and |seg1 ∩ seg1| = 42,916 (intersection matrix).
 
-Diagonal check: each diagonal value matches the corresponding segment total in segments_check (
-∣A∩A∣=∣A∣
-∣A∩A∣=∣A∣).
+Minus self equals zero:
+Example: |seg1 − seg1| = 0, |seg2 − seg2| = 0 (minus matrix).
 
-Partition behavior: segments that represent mutually exclusive tiers show zero overlap (e.g., seg1 vs seg2, seg4 vs seg5).
+Union self equals total:
+Example: |seg6 ∪ seg6| = 323,466 (union matrix).
 
-Compound segments: rows such as seg7, seg8, seg9, etc. behave as expected subsets of their component primitive segments (e.g., seg7 ⊆ seg1 and seg7 ⊆ seg4).
+These confirm the operators are behaving as sets, not artifacts of joins.
 
-If you want one extra “QA sentence” that’s worth adding right after this sample:
-
-The matrix is symmetric for intersection (
-∣A∩B∣=∣B∩A∣
-∣A∩B∣=∣B∩A∣), providing an additional integrity check on the generated results.
-
-Also mention how the diagnal matches our totals in this case.
-
-Add this directly under the sample matrix in Section 5:
-
-Diagonal validation against segment totals.
-Each diagonal entry in the intersection matrix represents 
-∣A∩A∣
-∣A∩A∣, which by definition must equal the total size of segment A. These values match exactly with the precomputed totals stored in the segments_check table from Section 3:
-
-seg1 diagonal = 42,916 → matches total high-engagement count
-
-seg2 diagonal = 393,315 → matches total low-engagement count
-
-seg3 diagonal = 123,868 → matches total moderate-engagement count
-
-seg4 diagonal = 70,027 → matches total high-vote-tier count
-
-seg5 diagonal = 166,606 → matches total low-vote-tier count
-
-seg6 diagonal = 323,466 → matches total middle-vote-tier count
-
-seg7–seg12 diagonals similarly match their respective compound segment totals
-
-This equality confirms that segment membership was computed consistently and that the matrix generation logic correctly preserves set identity (
-∣A∩A∣=∣A∣
-∣A∩A∣=∣A∣).
-
-Union matrix (|A ∪ B|)
-
-The union matrix stores pairwise union counts between segments. Each cell represents the number of distinct postid values that belong to either segment A or segment B.
-
-[union matrix table as shown]
-
-Interpretation.
-
-Union identity on diagonal.
-The diagonal represents 
-∣A∪A∣
-∣A∪A∣, which must equal 
-∣A∣
-∣A∣. As expected, each diagonal value matches the corresponding segment total from segments_check.
-
-Union relationship.
-For any pair of segments A and B:
-
+2. Union is numerically consistent with inclusion–exclusion
 ∣A∪B∣=∣A∣+∣B∣−∣A∩B∣
 ∣A∪B∣=∣A∣+∣B∣−∣A∩B∣
 
-The union matrix therefore acts as a secondary integrity check when compared with the intersection matrix and the segment totals.
+Example (seg1 vs seg6):
 
-Superset behavior.
-When one segment is a subset of another (e.g., compound segments within primitive tiers), the union collapses to the larger segment’s size. This behavior is visible in rows such as seg7 vs seg1 and seg4.
+|seg1| = 42,916
 
-Set difference matrix (A − B)
+|seg6| = 323,466
 
-The minus matrix stores directional set differences. Each cell represents:
+|seg1 ∩ seg6| = 26,625
 
-∣A∖B∣=count of postids in A but not in B
-∣A∖B∣=count of postids in A but not in B
-[minus matrix table as shown]
+Predicted: 42,916 + 323,466 − 26,625 = 339,757
 
-Key validation properties.
+Observed: |seg1 ∪ seg6| = 339,757 (union matrix)
 
-Zero diagonals.
-The diagonal is zero for all segments because:
+That is a direct proof that the union matrix is not “made up”; it’s derived consistently from the same underlying sets.
 
-∣A∖A∣=0
-∣A∖A∣=0
+3. Disjoint pairs behave correctly (zero overlap)
 
-This confirms that the subtraction logic is implemented correctly.
+If |A ∩ B| = 0, then:
 
-Directional behavior.
-Unlike intersection and union, the minus matrix is not symmetric:
+|A ∪ B| = |A| + |B|
 
-∣A∖B∣≠∣B∖A∣
-∣A∖B∣
-
-=∣B∖A∣
+|A − B| = |A|
 
-This is expected and provides insight into subset relationships.
-For example, if segment B is largely contained within segment A, then:
+Example (seg1 vs seg2):
 
-∣B∖A∣
-∣B∖A∣ will be small or zero
+|seg1 ∩ seg2| = 0 (intersection)
 
-∣A∖B∣
-∣A∖B∣ will be relatively large
+|seg1 ∪ seg2| = 436,231, which equals 42,916 + 393,315 (union)
 
-Consistency with intersection totals.
-Each cell also satisfies:
+|seg1 − seg2| = 42,916 (minus)
 
-∣A∣=∣A∩B∣+∣A∖B∣
-∣A∣=∣A∩B∣+∣A∖B∣
+This shows the matrix correctly captures truly independent segment families (not everything overlaps with everything).
 
-Comparing rows of the minus matrix with the corresponding rows of the intersection matrix provides another internal consistency check across all derived segment relationships.
+4. Containment shows up as “full intersection” + directional minus = 0
 
-Summary of matrix validation checks
+A near-subset (or strict subset) relationship looks like:
 
-Across the three matrices:
+|A ∩ B| = |A|
 
-Intersection diagonal = segment totals
+|A − B| = 0
 
-Union diagonal = segment totals
+|A ∪ B| = |B|
 
-Minus diagonal = 0
+Example (seg10 inside seg2):
 
-Intersection matrix symmetric
+|seg10| = 220,875 (intersection diagonal)
 
-Union matrix symmetric
+|seg10 ∩ seg2| = 220,875 (intersection)
 
-Minus matrix directional but consistent with identity
+|seg10 − seg2| = 0 (minus)
 
-∣A∣=∣A∩B∣+∣A∖B∣
-∣A∣=∣A∩B∣+∣A∖B∣
+|seg2 ∪ seg10| = 393,315 = |seg2| (union)
 
-Together, these confirm correctness of the segment membership logic and matrix construction.
+That is a clean numeric signature of containment, consistent with tier/threshold-style segmentation.
 
+Conclusion
+
+The matrices validate both correctness (set identities hold with exact numeric matches) and structure (disjoint groups, partial overlaps, and containment relationships appear explicitly). This demonstrates that the segmentation engine is producing coherent sets rather than arbitrary buckets.
 
