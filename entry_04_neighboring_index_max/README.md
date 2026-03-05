@@ -8,10 +8,10 @@ creationdate
 lastactivitydate
 
 In analytical queries we sometimes need to compute:
-
+````sql
 SELECT MAX(lastactivitydate)
 FROM posts;
-
+````
 However, the table does not have an index on lastactivitydate.
 
 On large datasets this forces PostgreSQL to perform a sequential scan across the entire table, which can be extremely expensive and potentially disruptive to other workloads.
@@ -43,11 +43,12 @@ Approach 1 — No Backfills
 If the system never inserts late records (no historical backfills), then the most recent activity must occur near the newest creation time.
 
 In that case we can query:
-
+````sql
 SELECT lastactivitydate
 FROM posts
 ORDER BY creationdate DESC, lastactivitydate DESC
 LIMIT 1;
+````
 Why this works
 
 PostgreSQL can use the index on creationdate
@@ -67,13 +68,13 @@ For example:
 post_id | creationdate | lastactivitydate
 
 In this case the optimization becomes:
-
+````sql
 SELECT lastactivitydate
 FROM posts
 WHERE id = ?
 ORDER BY creationdate DESC, lastactivitydate DESC
 LIMIT 1;
-
+````
 This returns the newest version of the post and therefore the correct lastactivitydate.  However it is unreliable since one postid may not show us the overall maximum of lastactivitydate.
 
 Approach 3 — Handling Late Backfills
