@@ -4,19 +4,20 @@
 Suppose the posts table is queried primarily by creationdate and owneruserid, and the posthistory table is queried primarily by creationdate and posthistorytypeid. If these predicates represent the majority of workload (for example, roughly 95% of queries), organizing the tables to align with these columns can significantly improve performance.
 
 In this entry, both tables are optimized using multi-level partitioning. The posts table is partitioned by range on creationdate and subpartitioned by hash on owneruserid, while the posthistory table is partitioned by range on creationdate and subpartitioned by list on posthistorytypeid.
-
+- ![Partitioned Table Sample Visual 1](./diagrams/partitions1.jpg)
+- ![Partitioned Table Sample Visual 2](./diagrams/partitions2.jpg)
 We then compare the query performance of these partitioned tables against equivalent non-partitioned tables, demonstrating how aligning table structure with the most common query predicates can reduce the amount of data PostgreSQL must scan and improve execution time.
 
 The posthistory table is partitioned by range on creationdate and subpartitioned by list on posthistorytypeid. To determine how these list partitions should be structured, the distribution of posthistorytypeid values was first examined.
 
 The following query shows the row counts for each history type:
-
+````sql
 select posthistorytypeid, count(*) cnt
 from posthistory
 group by posthistorytypeid;
-
+````
 The results show that the majority of rows are concentrated in a small number of history types:
-
+````sql
 posthistorytypeid	cnt
 1	19474712
 2	48930290
@@ -45,7 +46,7 @@ posthistorytypeid	cnt
 37	1634
 38	6713
 50	150101
-
+````
 From this distribution it becomes clear that four types dominate the table:
 
 1
