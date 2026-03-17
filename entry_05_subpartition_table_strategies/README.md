@@ -6,6 +6,7 @@ Suppose the posts table is queried primarily by creationdate and owneruserid, an
 In this entry, both tables are optimized using multi-level partitioning. The posts table is partitioned by range on creationdate and subpartitioned by hash on owneruserid, while the posthistory table is partitioned by range on creationdate and subpartitioned by list on posthistorytypeid.
 - ![Partitioned Table Sample Visual 1](./diagrams/partitions1.jpg)
 - ![Partitioned Table Sample Visual 2](./diagrams/partitions2.jpg)
+
 We then compare the query performance of these partitioned tables against equivalent non-partitioned tables, demonstrating how aligning table structure with the most common query predicates can reduce the amount of data PostgreSQL must scan and improve execution time.
 
 The posthistory table is partitioned by range on creationdate and subpartitioned by list on posthistorytypeid. To determine how these list partitions should be structured, the distribution of posthistorytypeid values was first examined.
