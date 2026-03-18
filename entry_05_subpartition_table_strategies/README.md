@@ -3,7 +3,7 @@
 
 Suppose the posts table is queried primarily by creationdate and owneruserid, and the posthistory table is queried primarily by creationdate and posthistorytypeid. If these predicates represent the majority of workload (for example, roughly 95% of queries), organizing the tables to align with these columns can significantly improve performance.
 
-In this entry, both tables are optimized using multi-level partitioning. The posts table is partitioned by range on creationdate and subpartitioned by hash on owneruserid, while the posthistory table is partitioned by range on creationdate and subpartitioned by list on posthistorytypeid.
+In this entry, both tables are optimized using multi-level partitioning. The posts table is partitioned by range on creationdate and subpartitioned by hash on owneruserid, while the posthistory table is partitioned by range on creationdate and subpartitioned by list on posthistorytypeid.  You can see a sample visual representations below.
 - ![Partitioned Table Sample Visual 1](./diagrams/partitions1.jpg)
 - ![Partitioned Table Sample Visual 2](./diagrams/partitions2.jpg)
 
@@ -59,7 +59,7 @@ From this distribution it becomes clear that four types dominate the table:
 5
 
 To better understand their relative weight compared to the remaining types, the counts can be grouped into major and minor categories:
-
+````sql
 select posthistorytypeid::char, count(*) cnt
 from posthistory
 where posthistorytypeid in (1,2,3,5)
@@ -72,16 +72,16 @@ from posthistory
 where posthistorytypeid not in (1,2,3,5)
 
 order by 1;
-
+````
 The results show the following distribution:
-
+````sql
 posthistorytypeid	cnt
 1	19474712
 2	48930290
 3	19452418
 5	29043379
 def	13015603
-
+````
 This confirms that the majority of the dataset is concentrated in these four types, while the remaining values collectively represent a much smaller portion of the table.
 
 Based on this analysis, the list subpartitioning strategy for posthistory was designed as follows:
@@ -314,7 +314,7 @@ WHERE creationdate >= '2010-01-01 00:00:00'
   AND posthistorytypeid = 2;
 ````
 PostgreSQL executed this query using a Bitmap Index Scan followed by a Bitmap Heap Scan on the index (creationdate, posthistorytypeid). The query returned approximately 20.2 million rows and the full operation completed in about 36.680 seconds.
-
+- ![Execution Plan 1](./diagrams/basic_posthistory_query_plan.jpg)
 Query against the partitioned table
 ````sql
 EXPLAIN (VERBOSE, FORMAT JSON, ANALYZE, COSTS, TIMING, BUFFERS)
@@ -327,6 +327,7 @@ WHERE creationdate >= '2010-01-01 00:00:00'
 For the partitioned table, PostgreSQL pruned the query to the specific child partition:
 
 posthistory_part2lvl_2010to2015_2
+- ![Execution Plan 2](./diagrams/optimized_posthistory_query_plan.jpg)
 
 The optimizer then performed a sequential scan on that partition, returning approximately 20.2 million rows in about 16.440 seconds.
 
