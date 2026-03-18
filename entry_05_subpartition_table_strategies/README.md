@@ -315,6 +315,7 @@ WHERE creationdate >= '2010-01-01 00:00:00'
 ````
 PostgreSQL executed this query using a Bitmap Index Scan followed by a Bitmap Heap Scan on the index (creationdate, posthistorytypeid). The query returned approximately 20.2 million rows and the full operation completed in about 36s 721.9ms.
  - ![Execution Plan 1](./diagrams/basic_posthistory_query_plan.jpg)
+
 Query against the partitioned table
 ````sql
 EXPLAIN (VERBOSE, FORMAT JSON, ANALYZE, COSTS, TIMING, BUFFERS)
