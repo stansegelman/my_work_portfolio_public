@@ -602,6 +602,9 @@ WHERE creationdate >= '2010-01-01 00:00:00'
   AND creationdate <  '2015-01-01 00:00:00'
   AND owneruserid = 22656;
 ````
+- ![Execution Plan 3](./diagrams/basic_posts_query_plan2.jpg)
+
+
 ````sql  
 EXPLAIN (VERBOSE, FORMAT JSON, ANALYZE, COSTS, TIMING, BUFFERS)
 SELECT *
@@ -610,9 +613,12 @@ WHERE creationdate >= '2010-01-01 00:00:00'
   AND creationdate <  '2015-01-01 00:00:00'
   AND owneruserid = 22656;
 ````
-The original posts table completed in roughly 4.4 seconds, while the partitioned version completed in about 2.17 seconds.
+- ![Execution Plan 4](./diagrams/optimized_posts_query_plan2.jpg)
 
-This reduced execution time by approximately 50.6%, saving about 2.23 seconds on the same query.
+
+The original posts table completed in roughly 8s 177ms, while the partitioned version completed in about 2s 265ms.
+
+This reduced execution time by three quarters.
 
 Why the Partitioned Version Was Faster
 
