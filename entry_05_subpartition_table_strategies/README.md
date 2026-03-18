@@ -411,7 +411,7 @@ Sizing the posts Subpartition Layout by Time Range
 After creating the partitioned parent table, the next step was to determine how aggressively each 5-year range should be subpartitioned by owneruserid. Unlike a uniform design, posts is not distributed evenly across time, so applying the same hash modulus to every range would have been arbitrary and inefficient.
 
 To measure the distribution, I first checked the row counts for each 5-year creationdate window:
-
+````sql
 SELECT '2005-01-01 00:00:00' strt_rng,COUNT(*)
 FROM posts
 WHERE creationdate >= '2005-01-01 00:00:00' AND creationdate < '2010-01-01 00:00:00'
@@ -427,14 +427,14 @@ UNION ALL
 SELECT '2020-01-01 00:00:00',COUNT(*)
 FROM posts
 WHERE creationdate >= '2020-01-01 00:00:00' AND creationdate < '2025-01-01 00:00:00';
-
+````
 This returned:
-
+````sql
 2005-01-01 00:00:00    1,348,178
 2010-01-01 00:00:00   20,218,550
 2015-01-01 00:00:00   23,578,702
 2020-01-01 00:00:00    9,403,887
-
+````
 The distribution is heavily skewed toward the middle ranges. Because of that, I did not use a single fixed modulus for all second-level partitions. Instead, I assigned subpartition counts based on relative volume:
 
 2005–2010: 2 hash subpartitions
@@ -450,7 +450,7 @@ This produced a more balanced physical layout without over-partitioning the smal
 Creating the Range Partitions
 
 The first step was to create the 5-year creationdate partitions under posts_part2lvl, with each of those partitions declared as hash-partitioned by owneruserid:
-
+````sql
 DO $$
 DECLARE
 start_dt timestamp;
@@ -469,7 +469,7 @@ LOOP
     LOOP
 
         RAISE NOTICE '%', format(
-            'CREATE TABLE %s_part2lvl_%sto%s PARTITION OF %s_part2lvl FOR VALUES FROM (%L) TO (%L) PARTITION BY HASH(owneruserid);;',
+            'CREATE TABLE %s_part2lvl_%sto%s PARTITION OF %s_part2lvl FOR VALUES FROM (%L) TO (%L) PARTITION BY HASH(owneruserid);',
             tbl,yr,yr::int+5,tbl,start_dt,end_dt
         );
 
@@ -482,7 +482,14 @@ LOOP
 END LOOP;
 END;
 $$;
-
+````
+OR
+````sql
+  CREATE TABLE posts_part2lvl_2005to2010 PARTITION OF posts_part2lvl FOR VALUES FROM ('2005-01-01 00:00:00') TO ('2010-01-01 00:00:00') PARTITION BY HASH(owneruserid);
+  CREATE TABLE posts_part2lvl_2010to2015 PARTITION OF posts_part2lvl FOR VALUES FROM ('2010-01-01 00:00:00') TO ('2015-01-01 00:00:00') PARTITION BY HASH(owneruserid);
+  CREATE TABLE posts_part2lvl_2015to2020 PARTITION OF posts_part2lvl FOR VALUES FROM ('2015-01-01 00:00:00') TO ('2020-01-01 00:00:00') PARTITION BY HASH(owneruserid);
+  CREATE TABLE posts_part2lvl_2020to2025 PARTITION OF posts_part2lvl FOR VALUES FROM ('2020-01-01 00:00:00') TO ('2025-01-01 00:00:00') PARTITION BY HASH(owneruserid);
+````
 This produced the expected first-level range partitions:
 
 posts_part2lvl_2005to2010
@@ -495,7 +502,7 @@ Each one covered a fixed creationdate range and was prepared to receive a differ
 Creating the Hash Subpartitions
 
 With the range partitions in place, I then generated the second-level hash partitions. The modulus for each 5-year range was chosen dynamically from the year embedded in the table name:
-
+````sql
 DO $$
 DECLARE
 tbl text;
@@ -535,7 +542,17 @@ LOOP
 END LOOP;
 END;
 $$;
-
+````
+OR
+````sql
+CREATE TABLE posts_part2lvl_2005to2010_0 PARTITION OF posts_part2lvl_2005to2010 for values with (modulus 2, remainder 0);
+CREATE TABLE posts_part2lvl_2005to2010_1 PARTITION OF posts_part2lvl_2005to2010 for values with (modulus 2, remainder 1);
+CREATE TABLE posts_part2lvl_2010to2015_0 PARTITION OF posts_part2lvl_2010to2015 for values with (modulus 10, remainder 0);
+CREATE TABLE posts_part2lvl_2010to2015_1 PARTITION OF posts_part2lvl_2010to2015 for values with (modulus 10, remainder 1);
+CREATE TABLE posts_part2lvl_2010to2015_2 PARTITION OF posts_part2lvl_2010to2015 for values with (modulus 10, remainder 2);
+CREATE TABLE posts_part2lvl_2010to2015_3 PARTITION OF posts_part2lvl_2010to2015 for values with (modulus 10, remainder 3);
+....
+````
 The intended result was a non-uniform hash layout:
 
 posts_part2lvl_2005to2010: 2 subpartitions
@@ -562,10 +579,6 @@ range partition on creationdate
 
 hash subpartition on owneruserid
 
-Instead, the pattern used against pg_tables was broad enough to re-select child partitions and effectively recurse the naming convention one level further. In other words, the generation logic worked mechanically, but the table-selection filter was too loose.
-
-The correct implementation should restrict the second pass to only the immediate range partitions, not every table whose name begins with posts_part2lvl_.
-
 Design Rationale
 
 Despite the over-generation in this draft, the architectural decision itself was deliberate. creationdate provides strong pruning for time-based scans, while owneruserid distributes large date ranges into smaller physical units that can reduce scan scope for owner-focused or mixed filters. Because the volume of posts changes significantly across time, using different hash counts by range avoids both extremes:
@@ -581,20 +594,22 @@ Testing owneruserid Access Within a Time Range
 With the second partitioning level in place, I then tested a query pattern that combines both partition dimensions: a creationdate range filter together with a specific owneruserid.
 
 To make the comparison meaningful, I used one of the most prolific owners in the dataset, owneruserid = 22656, and ran the same query against both the original posts table and the partitioned posts_part2lvl table:
-
+````sql
 EXPLAIN (VERBOSE, FORMAT JSON, ANALYZE, COSTS, TIMING, BUFFERS)
 SELECT *
 FROM posts
 WHERE creationdate >= '2010-01-01 00:00:00'
   AND creationdate <  '2015-01-01 00:00:00'
   AND owneruserid = 22656;
+````
+````sql  
 EXPLAIN (VERBOSE, FORMAT JSON, ANALYZE, COSTS, TIMING, BUFFERS)
 SELECT *
 FROM posts_part2lvl
 WHERE creationdate >= '2010-01-01 00:00:00'
   AND creationdate <  '2015-01-01 00:00:00'
   AND owneruserid = 22656;
-
+````
 The original posts table completed in roughly 4.4 seconds, while the partitioned version completed in about 2.17 seconds.
 
 This reduced execution time by approximately 50.6%, saving about 2.23 seconds on the same query.
