@@ -5,18 +5,23 @@ Suppose the posts table is queried primarily by creationdate and owneruserid, an
 
 In this entry, both tables are optimized using multi-level partitioning. The posts table is partitioned by range on creationdate and subpartitioned by hash on owneruserid, while the posthistory table is partitioned by range on creationdate and subpartitioned by list on posthistorytypeid.  You can see a sample visual representations below.
 - ![Partitioned Table Sample Visual 1](./diagrams/partitions1.jpg)
+
 - ![Partitioned Table Sample Visual 2](./diagrams/partitions2.jpg)
 
 We then compare the query performance of these partitioned tables against equivalent non-partitioned tables, demonstrating how aligning table structure with the most common query predicates can reduce the amount of data PostgreSQL must scan and improve execution time.
 
-The posthistory table is partitioned by range on creationdate and subpartitioned by list on posthistorytypeid. To determine how these list partitions should be structured, the distribution of posthistorytypeid values was first examined.
+The posthistory partitioned table will be examined first.  The posthistory table is partitioned by range on creationdate and subpartitioned by list on posthistorytypeid. To determine how these list partitions should be structured, the distribution of posthistorytypeid values was first examined.
 
 The following query shows the row counts for each history type:
-````sql
-select posthistorytypeid, count(*) cnt
-from posthistory
-group by posthistorytypeid;
-````
+```sql
+SELECT
+    posthistorytypeid,
+    COUNT(*) AS cnt
+FROM posthistory
+GROUP BY posthistorytypeid
+ORDER BY posthistorytypeid;
+```
+
 The results show that the majority of rows are concentrated in a small number of history types:
 ````sql
 posthistorytypeid	cnt
@@ -59,20 +64,24 @@ From this distribution it becomes clear that four types dominate the table:
 5
 
 To better understand their relative weight compared to the remaining types, the counts can be grouped into major and minor categories:
-````sql
-select posthistorytypeid::char, count(*) cnt
-from posthistory
-where posthistorytypeid in (1,2,3,5)
-group by posthistorytypeid
+```sql
+SELECT
+    posthistorytypeid::char AS posthistorytypeid,
+    COUNT(*) AS cnt
+FROM posthistory
+WHERE posthistorytypeid IN (1, 2, 3, 5)
+GROUP BY posthistorytypeid
 
-union all
+UNION ALL
 
-select 'def', count(*)
-from posthistory
-where posthistorytypeid not in (1,2,3,5)
+SELECT
+    'def' AS posthistorytypeid,
+    COUNT(*) AS cnt
+FROM posthistory
+WHERE posthistorytypeid NOT IN (1, 2, 3, 5)
 
-order by 1;
-````
+ORDER BY 1;
+```
 The results show the following distribution:
 ````sql
 posthistorytypeid	cnt
