@@ -313,7 +313,7 @@ WHERE creationdate >= '2010-01-01 00:00:00'
   AND creationdate <  '2015-01-01 00:00:00'
   AND posthistorytypeid = 2;
 ````
-PostgreSQL executed this query using a Bitmap Index Scan followed by a Bitmap Heap Scan on the index (creationdate, posthistorytypeid). The query returned approximately 20.2 million rows and the full operation completed in about 36.680 seconds.
+PostgreSQL executed this query using a Bitmap Index Scan followed by a Bitmap Heap Scan on the index (creationdate, posthistorytypeid). The query returned approximately 20.2 million rows and the full operation completed in about 36s 721.9ms.
  - ![Execution Plan 1](./diagrams/basic_posthistory_query_plan.jpg)
 Query against the partitioned table
 ````sql
@@ -329,11 +329,11 @@ For the partitioned table, PostgreSQL pruned the query to the specific child par
 posthistory_part2lvl_2010to2015_2
 - ![Execution Plan 2](./diagrams/optimized_posthistory_query_plan.jpg)
 
-The optimizer then performed a sequential scan on that partition, returning approximately 20.2 million rows in about 16.440 seconds.
+The optimizer then performed a sequential scan on that partition, returning approximately 20.2 million rows in about 17s 17ms .
 
 Result
 
-As shown by the execution plans, the partitioned table reduced runtime for this large-result query from approximately 36.680 seconds to 16.440 seconds, reducing execution time by about 55%.
+As shown by the execution plans, the partitioned table reduced runtime for this large-result query from approximately 36s 721.9ms seconds to 17s 17ms, reducing execution time by about a half.
 
 The performance improvement occurs because the partitioned design allows PostgreSQL to eliminate irrelevant data segments and operate directly on the targeted partition that satisfies both predicates (creationdate and posthistorytypeid). For large result sets such as this one, scanning a single pruned partition is significantly cheaper than executing an index-driven plan against a much larger monolithic table.
 
