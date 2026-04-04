@@ -2,7 +2,7 @@
 
 Welcome to the portfolio of **Stanislav Segelman**, a database craftsman focused on creativity, structure, integrity, and control.
 
-Everything here was built to solve real problems — under pressure, alone, and without shortcuts.
+Everything similar to here was built to solve real problems — under pressure, alone, and without shortcuts.
 ---
 
 ## 🧰 About Me
