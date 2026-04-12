@@ -302,6 +302,6 @@ Because dense_rank() can create duplicate recursive paths when multiple rows sha
 ```
 - ![final results](./diagrams/final_results_screenshot.jpg)
 
-    You can also download a sample csv from here:
+    You can also see a sample csv from here:
 
-[Download CSV](https://raw.githubusercontent.com/stansegelman/my_work_portfolio_public/refs/heads/main/entry_06_reopened_posts_with_recursive_cte/files/reopened_final_results_20260409183043.csv)
+[See CSV](https://raw.githubusercontent.com/stansegelman/my_work_portfolio_public/refs/heads/main/entry_06_reopened_posts_with_recursive_cte/files/reopened_final_results_20260409183043.csv)
