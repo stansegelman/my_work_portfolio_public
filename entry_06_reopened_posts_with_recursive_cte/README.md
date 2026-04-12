@@ -94,12 +94,15 @@ The final solution looks like this, and the following sections explain how it wa
         WHERE show_flag = 1
         ORDER BY parentid, grp, posttypeid, posthistorytypeid;
 ````
+I used this website to generate graphics for some of the execution plans: 
+
+[remote website](https://explain.dalibo.com/)
 
 The early steps are mostly data reduction. The base tables, posts and posthistory, are large enough that trying to solve the entire problem directly against them is a bad idea, especially when ordered processing and window logic are involved. That approach risks large sort spills and unnecessary work.
 
 Instead, the data is narrowed down in stages until only the relevant reopened-question history remains. By the time the recursive CTE is applied, it is no longer operating on the full event universe, but on a much smaller pre-final table built specifically for this analysis.
 
-Step 1 — Normalize Parent Grouping in posts
+## Step 1 — Normalize Parent Grouping in posts
 
 The first issue was structural. In the posts table, root posts store parentid = 0, while child posts store the actual parent post id in parentid. This means the raw parentid column cannot be used directly as a grouping key, because the parent post itself is excluded from its own family grouping.
 - ![Parent and child columns](./diagrams/pre_issue_1.jpg)
@@ -120,7 +123,9 @@ coalesce(nullif(parentid, 0), id) as root_parentid
 
 This converts each root post into its own grouping key and assigns all child posts to that same value. As a result, both the parent and its descendants can be processed under one unified parent scope.
 
-Step 2 — Reduce the Working Set to Reopened Post Families
+## Step 2  
+
+Reduce the Working Set to Reopened Post Families.
 
 After normalizing parent grouping in posts, the next step was to aggressively reduce the working set.
 
@@ -177,7 +182,9 @@ In practical terms, this first reduction step cuts the working set down from rou
 
 That matters because the recursive logic no longer starts from the full history table. It starts from a materially smaller subset containing only post families that are actually relevant to reopened activity.
 
-Step 3. We reduce the dataset further by keeping only parent groups that contain a known starting point. A valid starting point is represented by posthistorytypeid IN (1,2,3), which marks the initial creation-related records. This prevents us from analyzing a history chain that begins from an unknown intermediate state.
+## Step 3. 
+
+We reduce the dataset further by keeping only parent groups that contain a known starting point. A valid starting point is represented by posthistorytypeid IN (1,2,3), which marks the initial creation-related records. This prevents us from analyzing a history chain that begins from an unknown intermediate state.
 
 At this stage, we use dense_rank() instead of row_number(). The goal is to preserve timestamp ties within the same parentid, so that all records created at the same moment remain in the same group. This is important because those tied records represent the same logical event window and should be evaluated together in the recursive step that follows.
 ```sql
@@ -195,7 +202,9 @@ WHERE EXISTS (
       AND b.posthistorytypeid IN (1, 2, 3)
 );
 ```
-Step 4. We create a recursive CTE that walks through each parentid group one timestamp bucket at a time by using the dense_rank() value generated in the previous step.
+## Step 4. 
+
+We create a recursive CTE that walks through each parentid group one timestamp bucket at a time by using the dense_rank() value generated in the previous step.
 
 This step introduces two control columns.
 
@@ -305,3 +314,15 @@ Because dense_rank() can create duplicate recursive paths when multiple rows sha
     You can also see a sample csv from here:
 
 [See CSV](https://raw.githubusercontent.com/stansegelman/my_work_portfolio_public/refs/heads/main/entry_06_reopened_posts_with_recursive_cte/files/reopened_final_results_20260409183043.csv)
+
+## Execution Environment and System Metrics
+
+* OS: Windows 11 Pro (Build 26100)
+* CPU: Intel Core i7 (13th Gen, 12 cores / 16 threads)
+* RAM: 32 GB DDR4 @ 4800 MT/s
+* Disk: Samsung NVMe SSD (954 GB)
+* PostgreSQL 14.18 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0, 64-bit
+* Total DB Size: 205 GB
+* CPU Load: ~23% peak during execution
+* RAM Usage: ~13 GB steady
+* Disk I/O: Minimal due to efficient indexing and memory planning
