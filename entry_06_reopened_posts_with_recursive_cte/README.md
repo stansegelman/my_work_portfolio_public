@@ -300,7 +300,7 @@ Because dense_rank() can create duplicate recursive paths when multiple rows sha
         WHERE show_flag = 1
         ORDER BY parentid, grp, posttypeid, posthistorytypeid
 ```
-    - ![final results](./diagrams/final_results_screenshot.jpg)
+- ![final results](./diagrams/final_results_screenshot.jpg)
 
     You can also download a sample csv from here:
-    [Download v1.0](https://github.com/stansegelman/my_work_portfolio_public/tree/main/entry_06_reopened_posts_with_recursive_cte/files/reopened_final_results_20260409183043.csv)
+[Download v1.0](https://github.com/stansegelman/my_work_portfolio_public/tree/main/entry_06_reopened_posts_with_recursive_cte/files/reopened_final_results_20260409183043.csv)
