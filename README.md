@@ -24,7 +24,7 @@ I'm a hands-on developer who works from first principles. I’ve been the person
 | 03    | [Segment Set Matrices](entry_03_segment_set_matrices/)   | System that converts StackOverflow segments into structured set-based matrices for analysis|
 | 04    | [Finding Maximum Date](entry_04_neighboring_index_max/)   | Finding maximum date by using index on a relative column (Query Tuning)|
 | 05    | [Subpartition Strategies](entry_05_subpartition_table_strategies/)   | Subpartition strategies (Oprimization)|
-
+| 06    | [Recurisve CTE](entry_06_reopened_posts_with_recursive_cte/)| Finding specific records in all posts that have been reopend (Optimization)|
 ---
 
 ## 🧭 Philosophy
