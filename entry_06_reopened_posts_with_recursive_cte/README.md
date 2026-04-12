@@ -103,6 +103,7 @@ Step 1 — Normalize Parent Grouping in posts
 
 The first issue was structural. In the posts table, root posts store parentid = 0, while child posts store the actual parent post id in parentid. This means the raw parentid column cannot be used directly as a grouping key, because the parent post itself is excluded from its own family grouping.
 - ![Parent and child columns](./diagrams/pre_issue_1.jpg)
+
 For example, if post 4 is the root question, its row appears as:
 
 parentid = 0, id = 4
@@ -124,7 +125,8 @@ Step 2 — Reduce the Working Set to Reopened Post Families
 After normalizing parent grouping in posts, the next step was to aggressively reduce the working set.
 
 The key observation was that posthistory.posthistorytypeid = 11 represents a reopened event. Since this entry is specifically concerned with reconstructing reopened post activity, that event type becomes the first major filter.
---image
+- ![posthistorytypes](./diagrams/posthitorytypes.jpg)
+
 Instead of processing all post-history activity uniformly, I first restricted the workflow to only those post families whose normalized parent group contains at least one reopened event. This sharply reduces the amount of data carried into later recursive steps.
 
 To support that reduction, I created two indexes:
@@ -167,7 +169,8 @@ WHERE EXISTS
 
 ANALYZE reopened_posts;
 ```
---images
+- ![first execution plan](./diagrams/exec_plan2.jpg)
+
 This query does not sort the result set, which keeps the reduction step cheaper. The main cost is the broad scan of posthistory, while indexed lookups are used where the planner can apply them effectively.
 
 In practical terms, this first reduction step cuts the working set down from roughly 130 million rows in posthistory to about 800 thousand rows in the reduced temporary table, with execution completing in approximately 1 minute 37 seconds.
@@ -297,4 +300,7 @@ Because dense_rank() can create duplicate recursive paths when multiple rows sha
         WHERE show_flag = 1
         ORDER BY parentid, grp, posttypeid, posthistorytypeid
 ```
-    --final results image.
+    - ![final results](./diagrams/final_results_screenshot.jpg)
+
+    You can also download a sample csv from here:
+    [Download v1.0](https://github.com/stansegelman/my_work_portfolio_public/tree/main/entry_06_reopened_posts_with_recursive_cte/files/reopened_final_results_20260409183043.csv)
