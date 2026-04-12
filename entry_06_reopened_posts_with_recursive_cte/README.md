@@ -102,7 +102,7 @@ Instead, the data is narrowed down in stages until only the relevant reopened-qu
 Step 1 — Normalize Parent Grouping in posts
 
 The first issue was structural. In the posts table, root posts store parentid = 0, while child posts store the actual parent post id in parentid. This means the raw parentid column cannot be used directly as a grouping key, because the parent post itself is excluded from its own family grouping.
---image here
+- ![Parent and child columns](./diagrams/pre_issue_1.jpg)
 For example, if post 4 is the root question, its row appears as:
 
 parentid = 0, id = 4
