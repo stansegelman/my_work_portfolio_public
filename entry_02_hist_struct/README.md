@@ -135,115 +135,188 @@ CREATE TABLE IF NOT EXISTS hist.posts_hist
 SET TIME ZONE 'UTC';
 
 --Here is where we create partitions for the table
-declare
-start_dt timestamp;
-end_dt timestamp;
-yr text;
-
-begin
-for start_dt, end_dt,yr IN
-select g.dt, g.dt + interval '5 years',to_char(g.dt,'YYYY')
-from generate_series('2005-01-01'::date,'2020-01-01'::date,'5 years') as g(dt)
-LOOP
-
-EXECUTE format('CREATE TABLE hist.posts_hist_%sto%s PARTITION OF hist.posts_hist FOR VALUES FROM (%L) TO (%L);',yr,yr::int+5,start_dt,end_dt);
-
-END LOOP;
-
+DECLARE
+    start_dt TIMESTAMP;
+    end_dt   TIMESTAMP;
+    yr       TEXT;
+BEGIN
+    FOR start_dt, end_dt, yr IN
+        SELECT
+            g.dt,
+            g.dt + INTERVAL '5 years',
+            to_char(g.dt, 'YYYY')
+        FROM generate_series(
+            '2005-01-01'::date,
+            '2020-01-01'::date,
+            '5 years'
+        ) AS g(dt)
+    LOOP
+        EXECUTE format(
+            'CREATE TABLE hist.posts_hist_%sto%s
+             PARTITION OF hist.posts_hist
+             FOR VALUES FROM (%L) TO (%L);',
+            yr,
+            yr::int + 5,
+            start_dt,
+            end_dt
+        );
+    END LOOP;
 END;
 
 
 --Simple insert statement since the stractures are the same;
 
-insert into hist.posts_hist
-select * from posts;
+INSERT INTO hist.posts_hist
+SELECT *
+FROM posts;
+
+COMMIT;
 
 
 
 ---Generating other partitioned tables that have relationships invloving postids, since the posts table is partitioned by "lastactivity" date then the other table must be partitioned by the same called "posts_lastactivitydate", and we are assuming that the table the lastactivitydate in postids could be insert and updated but in other tables it can only be inserted.
 
 DECLARE
-
-stmnt1 text;
-stmnt2 text;
+    stmnt1 TEXT;
+    stmnt2 TEXT;
 BEGIN
-FOR stmnt1,stmnt2 IN
-SELECT 'DROP TABLE IF EXISTS hist.' || table_name || '_hist;',
-  'CREATE TABLE hist.' || table_name || E'_hist (\n' ||
-  string_agg(
-    '    ' || column_name || ' ' || CASE WHEN column_name ='id' THEN 'BIGSERIAL' ELSE data_type END ||
-    CASE 
-      WHEN character_maximum_length IS NOT NULL THEN '(' || character_maximum_length || ')'
-      ELSE ''
-    END ||
-    CASE 
-      WHEN is_nullable = 'NO' AND column_name <> 'id' THEN ' NOT NULL' 
-      ELSE ''
-    END
-    , E',\n' ORDER BY ordinal_position ASC
-  ) || E',\nposts_lastactivitydate timestamp\n) PARTITION BY RANGE(posts_lastactivitydate) ;' 
-FROM information_schema.columns
-WHERE table_name IN ('comments','votes','tags','postlinks')
-  AND table_schema = 'public'
-GROUP BY table_schema, table_name
-LOOP 
-RAISE NOTICE '%',stmnt1;
-EXECUTE stmnt1;
-RAISE NOTICE '%',stmnt2;
-EXECUTE stmnt2;
-END LOOP;
-END ;
+    FOR stmnt1, stmnt2 IN
+        SELECT
+            'DROP TABLE IF EXISTS hist.' || table_name || '_hist;',
+            'CREATE TABLE hist.'
+            || table_name
+            || E'_hist (\n'
+            || string_agg(
+                   '    '
+                   || column_name
+                   || ' '
+                   || CASE
+                          WHEN column_name = 'id' THEN 'BIGSERIAL'
+                          ELSE data_type
+                      END
+                   || CASE
+                          WHEN character_maximum_length IS NOT NULL
+                          THEN '(' || character_maximum_length || ')'
+                          ELSE ''
+                      END
+                   || CASE
+                          WHEN is_nullable = 'NO'
+                               AND column_name <> 'id'
+                          THEN ' NOT NULL'
+                          ELSE ''
+                      END,
+                   E',\n'
+                   ORDER BY ordinal_position ASC
+               )
+            || E',\nposts_lastactivitydate timestamp\n) PARTITION BY RANGE(posts_lastactivitydate);'
+        FROM information_schema.columns
+        WHERE table_name IN ('comments', 'votes', 'tags', 'postlinks')
+          AND table_schema = 'public'
+        GROUP BY
+            table_schema,
+            table_name
+    LOOP
+        RAISE NOTICE '%', stmnt1;
+        EXECUTE stmnt1;
 
+        RAISE NOTICE '%', stmnt2;
+        EXECUTE stmnt2;
+    END LOOP;
+END;
 --This is where we create partitions for the tables above
 
-declare
-start_dt timestamp;
-end_dt timestamp;
-yr text;
-tbl text;
-begin
+DECLARE
+    start_dt TIMESTAMP;
+    end_dt   TIMESTAMP;
+    yr       TEXT;
+    tbl      TEXT;
+BEGIN
+    FOREACH tbl IN ARRAY ARRAY['comments', 'votes', 'postlinks', 'tags']
+    LOOP
+        FOR start_dt, end_dt, yr IN
+            SELECT
+                g.dt,
+                g.dt + INTERVAL '5 years',
+                to_char(g.dt, 'YYYY')
+            FROM generate_series(
+                '2005-01-01'::date,
+                '2020-01-01'::date,
+                '5 years'
+            ) AS g(dt)
+        LOOP
+            RAISE NOTICE '%',
+                format(
+                    'CREATE TABLE hist.%s_hist_%sto%s
+                     PARTITION OF hist.%s_hist
+                     FOR VALUES FROM (%L) TO (%L);',
+                    tbl,
+                    yr,
+                    yr::int + 5,
+                    tbl,
+                    start_dt,
+                    end_dt
+                );
 
-FOREACH tbl IN ARRAY ARRAY['comments','votes','postlinks','tags']
-LOOP
-
-for start_dt, end_dt,yr IN
-select g.dt, g.dt + interval '5 years',to_char(g.dt,'YYYY')
-from generate_series('2005-01-01'::date,'2020-01-01'::date,'5 years') as g(dt)
-LOOP
-
-RAISE NOTICE '%', format('CREATE TABLE hist.%s_hist_%sto%s PARTITION OF hist.%s_hist FOR VALUES FROM (%L) TO (%L);',tbl,yr,yr::int+5,tbl,start_dt,end_dt);
-EXECUTE format('CREATE TABLE hist.%s_hist_%sto%s PARTITION OF hist.%s_hist FOR VALUES FROM (%L) TO (%L);',tbl,yr,yr::int+5,tbl,start_dt,end_dt);
-
-END LOOP;
-
-END LOOP;
-
+            EXECUTE format(
+                'CREATE TABLE hist.%s_hist_%sto%s
+                 PARTITION OF hist.%s_hist
+                 FOR VALUES FROM (%L) TO (%L);',
+                tbl,
+                yr,
+                yr::int + 5,
+                tbl,
+                start_dt,
+                end_dt
+            );
+        END LOOP;
+    END LOOP;
 END;
 
 
 --fill in the data
 
-declare
-start_dt timestamp;
-end_dt timestamp;
-yr text;
-tbl text;
-begin
+DECLARE
+    start_dt TIMESTAMP;
+    end_dt   TIMESTAMP;
+    yr       TEXT;
+    tbl      TEXT;
+BEGIN
+    FOREACH tbl IN ARRAY ARRAY['comments', 'votes', 'postlinks']
+    LOOP
+        RAISE NOTICE '%',
+            format(
+                E'INSERT INTO hist.%s_hist\nSELECT %s.*, posts.lastactivitydate
+                  FROM public.%s
+                  INNER JOIN public.posts
+                      ON posts.id = %s.postid;',
+                tbl,
+                tbl,
+                tbl,
+                tbl
+            );
 
-FOREACH tbl IN ARRAY ARRAY['comments','votes','postlinks']
-LOOP
+        EXECUTE format(
+            E'INSERT INTO hist.%s_hist\nSELECT %s.*, posts.lastactivitydate
+              FROM public.%s
+              INNER JOIN public.posts
+                  ON posts.id = %s.postid;',
+            tbl,
+            tbl,
+            tbl,
+            tbl
+        );
 
-RAISE NOTICE '%',format(E'INSERT INTO hist.%s_hist \nSELECT %s.*,posts.lastactivitydate FROM public.%s INNER JOIN public.posts ON posts.id = %s.postid;',tbl,tbl,tbl,tbl);
-EXECUTE format(E'INSERT INTO hist.%s_hist \nSELECT %s.*,posts.lastactivitydate FROM public.%s INNER JOIN public.posts ON posts.id = %s.postid;',tbl,tbl,tbl,tbl);
-COMMIT;
-END LOOP;
+        COMMIT;
+    END LOOP;
 
-INSERT INTO hist.tags_hist 
-SELECT tags.*,posts.lastactivitydate 
-FROM public.tags INNER JOIN public.posts ON posts.id = tags.wikipostid;
-
-
-end;
+    INSERT INTO hist.tags_hist
+    SELECT
+        tags.*,
+        posts.lastactivitydate
+    FROM public.tags
+    INNER JOIN public.posts
+        ON posts.id = tags.wikipostid;
+END;
 
 
 
@@ -290,32 +363,41 @@ END;
 
 --Here is where we create the sequnces from the tables above
 
-DECLARE 
-rec record;
-dumdum jsonb;
+DECLARE
+    rec    RECORD;
+    dumdum JSONB;
 BEGIN
-FOR rec IN
-	SELECT
-    ns.nspname     AS sequence_schema,
-    seq.relname    AS sequence_name,
-    dep.refobjid::regclass AS table_name,
-    a.attname      AS column_name,
-	format('SELECT setval(''%I.%I'',(SELECT MAX(%I) FROM %s) );',ns.nspname,seq.relname,a.attname,dep.refobjid::regclass::text ) stvl_stmnt
-FROM pg_class seq
-JOIN pg_namespace ns ON ns.oid = seq.relnamespace
-JOIN pg_depend dep ON dep.objid = seq.oid
-JOIN pg_class tbl ON tbl.oid = dep.refobjid
-JOIN pg_attribute a ON a.attrelid = tbl.oid AND a.attnum = dep.refobjsubid
-WHERE seq.relkind = 'S' -- sequence
-  AND ns.nspname = 'hist'
-  AND tbl.relname !~ '\d{4}to\d{4}'
-  AND a.attname = 'id'
-LOOP
-
-RAISE NOTICE '%',rec.stvl_stmnt;
-EXECUTE rec.stvl_stmnt INTO dumdum;
-
-END LOOP;
+    FOR rec IN
+        SELECT
+            ns.nspname AS sequence_schema,
+            seq.relname AS sequence_name,
+            dep.refobjid::regclass AS table_name,
+            a.attname AS column_name,
+            format(
+                'SELECT setval(''%I.%I'', (SELECT MAX(%I) FROM %s));',
+                ns.nspname,
+                seq.relname,
+                a.attname,
+                dep.refobjid::regclass::text
+            ) AS stvl_stmnt
+        FROM pg_class seq
+        JOIN pg_namespace ns
+            ON ns.oid = seq.relnamespace
+        JOIN pg_depend dep
+            ON dep.objid = seq.oid
+        JOIN pg_class tbl
+            ON tbl.oid = dep.refobjid
+        JOIN pg_attribute a
+            ON a.attrelid = tbl.oid
+           AND a.attnum = dep.refobjsubid
+        WHERE seq.relkind = 'S'
+          AND ns.nspname = 'hist'
+          AND tbl.relname !~ '\d{4}to\d{4}'
+          AND a.attname = 'id'
+    LOOP
+        RAISE NOTICE '%', rec.stvl_stmnt;
+        EXECUTE rec.stvl_stmnt INTO dumdum;
+    END LOOP;
 END;
 
 --Here is where we create foreign keys
@@ -355,22 +437,28 @@ END;
 
 --Here is where we copy the indices from public schema
 
-declare
-start_dt timestamp;
-end_dt timestamp;
-yr text;
-tbl text;
-begin
+DECLARE
+    start_dt TIMESTAMP;
+    end_dt   TIMESTAMP;
+    yr       TEXT;
+    tbl      TEXT;
+BEGIN
+    FOREACH tbl IN ARRAY ARRAY['posts_hist', 'comments_hist', 'votes_hist', 'postlinks_hist']
+    LOOP
+        RAISE NOTICE '%',
+            format(
+                E'CREATE INDEX %1$s_idx ON hist.%1$s(id);',
+                tbl
+            );
 
-FOREACH tbl IN ARRAY ARRAY['posts_hist','comments_hist','votes_hist','postlinks_hist']
-LOOP
+        EXECUTE format(
+            E'CREATE INDEX %1$s_idx ON hist.%1$s(id);',
+            tbl
+        );
 
-RAISE NOTICE '%',format(E'CREATE INDEX %1$s_idx ON hist.%1$s(id);',tbl);
-EXECUTE format(E'CREATE INDEX %1$s_idx ON hist.%1$s(id);',tbl);
-COMMIT;
-END LOOP;
-
-end;
+        COMMIT;
+    END LOOP;
+END;
 
 --This where we create constraint triggers based only on id (optional)
 
@@ -427,86 +515,117 @@ END;
 
 
 --This is where we just copy the tables that will not be partitioned: users and badges
-DECLARE 
-rec record;
-dumdum jsonb;
+DECLARE
+    rec    RECORD;
 BEGIN
+    DROP TABLE IF EXISTS hist.users_hist CASCADE;
 
+    CREATE TABLE hist.users_hist AS
+    SELECT *
+    FROM public.users;
 
-DROP TABLE IF EXISTS hist.users_hist CASCADE;
+    RAISE NOTICE 'table users created';
 
-CREATE TABLE hist.users_hist 
-AS
-SELECT *
-FROM public.users;
-raise notice 'table users created';
-DROP TABLE IF EXISTS hist.badges_hist CASCADE ;
-CREATE TABLE hist.badges_hist 
-AS
-SELECT *
-FROM public.badges;
+    DROP TABLE IF EXISTS hist.badges_hist CASCADE;
 
-raise notice 'table badges created';
+    CREATE TABLE hist.badges_hist AS
+    SELECT *
+    FROM public.badges;
 
+    RAISE NOTICE 'table badges created';
 
-FOR rec IN
-SELECT
-    n.nspname AS schema_name,
-    c.relname AS table_name,
-    con.conname AS constraint_name,
-    con.contype AS constraint_type,
-    pg_get_constraintdef(con.oid, true) AS definition,
-	a.attname,
-    format('ALTER TABLE %I.%I ADD CONSTRAINT %I %s;','hist'
-		,c.relname||'_hist',replace(con.conname,c.relname,c.relname||'_hist' )
-			,pg_get_constraintdef(con.oid, true) ) stmnt
-FROM pg_constraint con
-JOIN pg_class c ON c.oid = con.conrelid
-JOIN pg_namespace n ON n.oid = c.relnamespace
-JOIN pg_attribute a ON a.attrelid = c.oid AND a.attnum = ANY(con.conkey)
-WHERE n.nspname = 'public'
-  AND c.relname IN ('users','badges')
-  AND con.contype = 'p'
-  LOOP 
-  RAISE NOTICE '%',rec.stmnt;
-  EXECUTE rec.stmnt;
-  END LOOP;
-
- END;
+    FOR rec IN
+        SELECT
+            n.nspname AS schema_name,
+            c.relname AS table_name,
+            con.conname AS constraint_name,
+            con.contype AS constraint_type,
+            pg_get_constraintdef(con.oid, true) AS definition,
+            a.attname,
+            format(
+                'ALTER TABLE %I.%I ADD CONSTRAINT %I %s;',
+                'hist',
+                c.relname || '_hist',
+                replace(con.conname, c.relname, c.relname || '_hist'),
+                pg_get_constraintdef(con.oid, true)
+            ) AS stmnt
+        FROM pg_constraint con
+        JOIN pg_class c
+            ON c.oid = con.conrelid
+        JOIN pg_namespace n
+            ON n.oid = c.relnamespace
+        JOIN pg_attribute a
+            ON a.attrelid = c.oid
+           AND a.attnum = ANY (con.conkey)
+        WHERE n.nspname = 'public'
+          AND c.relname IN ('users', 'badges')
+          AND con.contype = 'p'
+    LOOP
+        RAISE NOTICE '%', rec.stmnt;
+        EXECUTE rec.stmnt;
+    END LOOP;
+END;
 
 
 ---creating sequences for the non-partitioned tables
-DECLARE 
-rec record;
-dumdum jsonb;
+DECLARE
+    rec    RECORD;
+    dumdum JSONB;
 BEGIN
-FOR rec IN
-select format('CREATE SEQUENCE %I.%s_%s_seq
-    INCREMENT BY 1         
-    MINVALUE 1
-    MAXVALUE 9223372036854775807  
-    START WITH 1           
-    CACHE 1                
-    CYCLE                  
-    OWNED BY %I.%I.%I',table_schema,table_name,column_name,table_schema,table_name,column_name) crtseq_stmnt
-,format('ALTER TABLE %I.%I ALTER COLUMN id SET DEFAULT nextval(''%I.%s_%s_seq''::regclass);',table_schema,table_name,table_schema,table_name,column_name) altr_stmnt
-,format('SELECT setval(''%I.%I_%I_seq'',(SELECT MAX(%I) FROM %I.%I) );',table_schema,table_name,column_name,column_name,table_schema,table_name) stvl_stmnt
-from information_schema.columns c 
-	  inner join pg_class cl on cl.relname = c.table_name
-where c.table_schema = 'hist' and c.column_name = 'id' and c.table_name IN ('users_hist','badges_hist')
-and cl.relkind = 'r'
---select * from pg_class;
-LOOP
-RAISE NOTICE '%',rec.crtseq_stmnt;
-EXECUTE rec.crtseq_stmnt;
+    FOR rec IN
+        SELECT
+            format(
+                'CREATE SEQUENCE %I.%s_%s_seq
+                 INCREMENT BY 1
+                 MINVALUE 1
+                 MAXVALUE 9223372036854775807
+                 START WITH 1
+                 CACHE 1
+                 CYCLE
+                 OWNED BY %I.%I.%I',
+                table_schema,
+                table_name,
+                column_name,
+                table_schema,
+                table_name,
+                column_name
+            ) AS crtseq_stmnt,
+            format(
+                'ALTER TABLE %I.%I
+                 ALTER COLUMN id
+                 SET DEFAULT nextval(''%I.%s_%s_seq''::regclass);',
+                table_schema,
+                table_name,
+                table_schema,
+                table_name,
+                column_name
+            ) AS altr_stmnt,
+            format(
+                'SELECT setval(''%I.%I_%I_seq'', (SELECT MAX(%I) FROM %I.%I));',
+                table_schema,
+                table_name,
+                column_name,
+                column_name,
+                table_schema,
+                table_name
+            ) AS stvl_stmnt
+        FROM information_schema.columns c
+        INNER JOIN pg_class cl
+            ON cl.relname = c.table_name
+        WHERE c.table_schema = 'hist'
+          AND c.column_name = 'id'
+          AND c.table_name IN ('users_hist', 'badges_hist')
+          AND cl.relkind = 'r'
+    LOOP
+        RAISE NOTICE '%', rec.crtseq_stmnt;
+        EXECUTE rec.crtseq_stmnt;
 
-RAISE NOTICE '%',rec.altr_stmnt;
-EXECUTE rec.altr_stmnt;
+        RAISE NOTICE '%', rec.altr_stmnt;
+        EXECUTE rec.altr_stmnt;
 
-RAISE NOTICE '%',rec.stvl_stmnt;
-EXECUTE rec.stvl_stmnt INTO dumdum;
-
-END LOOP;
+        RAISE NOTICE '%', rec.stvl_stmnt;
+        EXECUTE rec.stvl_stmnt INTO dumdum;
+    END LOOP;
 END;
 
 --constraints for non-partitioned tables, copied straight from public schema
