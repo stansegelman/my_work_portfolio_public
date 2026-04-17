@@ -88,8 +88,7 @@ SELECT * FROM fn_era_counts();
 
 ## Here is how to do it.
 
-``` 
-sql
+``` sql
 CREATE OR REPLACE PROCEDURE public.create_hist_struct()
 AS $BODY$
 DECLARE
@@ -246,6 +245,49 @@ FROM public.tags INNER JOIN public.posts ON posts.id = tags.wikipostid;
 
 end;
 
+
+
+--Here is where we create primary keys
+
+DECLARE
+    tbl TEXT;
+BEGIN
+    FOR tbl IN
+        SELECT tablename
+        FROM pg_tables
+        WHERE schemaname = 'hist'
+          AND tablename IN (
+              'tags_hist',
+              'comments_hist',
+              'votes_hist',
+              'postlinks_hist'
+          )
+    LOOP
+        RAISE NOTICE '%',
+            format(
+                'ALTER TABLE hist.%I
+                 ADD CONSTRAINT %s_pkey
+                 PRIMARY KEY (id, posts_lastactivitydate);',
+                tbl,
+                tbl
+            );
+
+        EXECUTE format(
+            'ALTER TABLE hist.%I
+             ADD CONSTRAINT %s_pkey
+             PRIMARY KEY (id, posts_lastactivitydate);',
+            tbl,
+            tbl
+        );
+
+        COMMIT;
+    END LOOP;
+
+    ALTER TABLE hist.posts_hist
+        ADD CONSTRAINT posts_hist_pkey
+        PRIMARY KEY (id, lastactivitydate);
+END;
+
 --Here is where we create the sequnces from the tables above
 
 DECLARE 
@@ -276,40 +318,39 @@ EXECUTE rec.stvl_stmnt INTO dumdum;
 END LOOP;
 END;
 
---Here is where we create primary keys
-
-DECLARE
-tbl text;
-
-BEGIN
-for tbl IN
-SELECT tablename
-from pg_tables 
-where schemaname = 'hist' AND tablename ~ '\d{4}to\d{4}'
-ORDER BY 1
-LOOP
-
-RAISE NOTICE '%',format('ALTER TABLE hist.%I ADD CONSTRAINT %s_pkey PRIMARY KEY (id); ',tbl,tbl);
-
-EXECUTE format('ALTER TABLE hist.%I ADD CONSTRAINT %s_pkey PRIMARY KEY (id); ',tbl,tbl);
-
-END LOOP;
-
-END;
-
 --Here is where we create foreign keys
-declare
-stmnt1 text;
+--We create foreign keys partition to partition so if we drop one posts partition the other foreign keys will not be effected.
+DECLARE
+    stmnt1 TEXT;
 BEGIN
-for stmnt1 IN
-SELECT format('ALTER TABLE hist.%I add constraint %s_%s_fk foreign key (%s) references hist.posts_hist_%s(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED;',table_name,column_name,table_name,column_name,intr)
-from information_schema.columns inner join lateral regexp_replace(table_name,'.*?(\d+to\d+).*','\1') as gn(intr) ON TRUE
-where table_schema = 'hist' and table_name ~ '\d+to\d+' and column_name IN ('postid','wikipostid')
-order by 1
-LOOP
-RAISE NOTICE '%',stmnt1;
-EXECUTE stmnt1;
-END LOOP;
+    FOR stmnt1 IN
+        SELECT format(
+            'ALTER TABLE hist.%I
+             ADD CONSTRAINT %s_%s_fk
+             FOREIGN KEY (%s, posts_lastactivitydate)
+             REFERENCES part.posts_hist_%s (id, lastactivitydate)
+             ON DELETE RESTRICT
+             DEFERRABLE INITIALLY IMMEDIATE;',
+            table_name,
+            column_name,
+            table_name,
+            column_name,
+            intr
+        )
+        FROM information_schema.columns
+        INNER JOIN LATERAL regexp_replace(
+            table_name,
+            '.*?(\d+to\d+).*',
+            '\1'
+        ) AS gn(intr) ON TRUE
+        WHERE table_schema = 'hist'
+          AND table_name ~ '\d+to\d+'
+          AND column_name IN ('postid', 'wikipostid')
+        ORDER BY 1
+    LOOP
+        RAISE NOTICE '%', stmnt1;
+        EXECUTE stmnt1;
+    END LOOP;
 END;
 
 --Here is where we copy the indices from public schema
@@ -331,7 +372,7 @@ END LOOP;
 
 end;
 
---This where we create constraint triggers
+--This where we create constraint triggers based only on id (optional)
 
 DECLARE
 stmnt1 text;
@@ -468,156 +509,116 @@ EXECUTE rec.stvl_stmnt INTO dumdum;
 END LOOP;
 END;
 
---constraints for non-partitioned tables
+--constraints for non-partitioned tables, copied straight from public schema
 
-DECLARE 
-rec record;
-dumdum jsonb;
+DECLARE
+    stmnt1 TEXT;
 BEGIN
-
-FOR rec IN
-
-with curr_u_fks
-as
-(
-SELECT
-    n.nspname AS schema_name,
-    c.relname AS table_name,
-    con.conname AS constraint_name,
-    con.contype AS constraint_type,
-    pg_get_constraintdef(con.oid, true) AS definition,
-	a.attname,
-    format('ALTER TABLE %I.%I ADD CONSTRAINT %I %s;','public'
-		,c.relname,replace(con.conname,c.relname,c.relname )
-			,pg_get_constraintdef(con.oid, true) ) stmnt
-FROM pg_constraint con
-JOIN pg_class c ON c.oid = con.conrelid
-JOIN pg_namespace n ON n.oid = c.relnamespace
-JOIN pg_attribute a ON a.attrelid = c.oid AND a.attnum = ANY(con.conkey)
-WHERE n.nspname = 'public'
-  AND c.relname NOT IN ('users')
-  AND pg_get_constraintdef(con.oid, true) ~ 'REFERENCES users\(id\)'
-  AND a.attname ~ '^(owner)?userid$' 
-  AND con.contype = 'f'
-)
-select t.schemaname,t.tablename,cuf.schema_name,cuf.table_name,cuf.attname,cuf.constraint_name
---,cuf.definition
-,REPLACE(
-	REPLACE(
-		REPLACE(stmnt,cuf.schema_name||'.'||cuf.table_name,t.schemaname||'.'||t.tablename)
-		,cuf.constraint_name,t.tablename||'_'||cuf.attname||'_fkey')
-,'users(id)','hist.users_hist(id)') as stmnt
-,stmnt as ol_stmnt
-from pg_class c inner join pg_tables t ON  c.relname = t.tablename
-				inner join curr_u_fks cuf ON c.relname ~ cuf.table_name 
-where c.relkind = 'r' and t.schemaname = 'hist'
-and c.relname NOT IN ('users_hist')
-
- LOOP 
-  RAISE NOTICE '%',rec.stmnt;
-  EXECUTE rec.stmnt;
-  END LOOP;
-
- END;
+    FOR stmnt1 IN
+        SELECT format(
+            'ALTER TABLE hist.%I
+             ADD CONSTRAINT %s_%s_users_fk
+             FOREIGN KEY (%s)
+             REFERENCES hist.users_hist (id)
+             ON DELETE RESTRICT
+             DEFERRABLE INITIALLY IMMEDIATE;',
+            table_name,
+            column_name,
+            table_name,
+            column_name
+        )
+        FROM information_schema.columns
+        WHERE table_schema = 'hist'
+          AND table_name IN (
+              'comments_hist',
+              'votes_hist',
+              'postlinks_hist',
+              'tags_hist',
+              'posts_hist'
+          )
+          AND column_name IN ('userid', 'owneruserid')
+        ORDER BY 1
+    LOOP
+        RAISE NOTICE '%', stmnt1;
+        EXECUTE stmnt1;
+        COMMIT;
+    END LOOP;
+END;
 
 --indeces for non-partitioned tables
 
-DECLARE 
-rec record;
-dumdum jsonb;
+DECLARE
+    rec RECORD;
 BEGIN
-
-FOR rec IN
-with public_non_pk_idx
-as
-(
-SELECT 
-   ix.indisunique,
-	i.relname index_name,
-    t.relname table_name,
-	am.amname index_type,
-	string_agg(quote_ident(a.attname), ', ' ORDER BY a.attnum) cols,
-	coalesce(pg_get_expr(ix.indpred, ix.indrelid),'') partial_clause,
-    'CREATE ' || 
-    CASE WHEN ix.indisunique THEN 'UNIQUE ' ELSE '' END ||
-    'INDEX ' || quote_ident(i.relname) || 
-    ' ON ' || quote_ident(t.relname) || 
-    ' USING ' || am.amname || 
-    ' (' || 
-        string_agg(quote_ident(a.attname), ', ' ORDER BY a.attnum) || 
-    ')' || 
-    COALESCE(' WHERE ' || pg_get_expr(ix.indpred, ix.indrelid), '') || 
-    ';' AS create_index_sql
-FROM pg_class t
-JOIN pg_namespace n ON n.oid = t.relnamespace
-JOIN pg_index ix ON ix.indrelid = t.oid
-JOIN pg_class i ON i.oid = ix.indexrelid
-JOIN pg_am am ON i.relam = am.oid
-JOIN pg_attribute a ON a.attrelid = t.oid AND a.attnum = ANY(ix.indkey)
-WHERE n.nspname = 'public'
-  AND t.relkind = 'r'
-  AND i.relname !~* '^pk_'
- -- AND t.relname = 'your_table_name'
-GROUP BY i.relname, t.relname, am.amname, ix.indisunique, ix.indpred, ix.indrelid
-),
-hist_idxs  --these are the indices that already exist and they are not based on id
-as
-(
-SELECT 
-   ix.indisunique,
-	i.relname index_name,
-    t.relname table_name,
-	am.amname index_type,
-	string_agg(quote_ident(a.attname), ', ' ORDER BY a.attnum) cols,
-	coalesce(pg_get_expr(ix.indpred, ix.indrelid),'') partial_clause,
-    'CREATE ' || 
-    CASE WHEN ix.indisunique THEN 'UNIQUE ' ELSE '' END ||
-    'INDEX ' || quote_ident(i.relname) || 
-    ' ON ' || quote_ident(t.relname) || 
-    ' USING ' || am.amname || 
-    ' (' || 
-        string_agg(quote_ident(a.attname), ', ' ORDER BY a.attnum) || 
-    ')' || 
-    COALESCE(' WHERE ' || pg_get_expr(ix.indpred, ix.indrelid), '') || 
-    ';' AS create_index_sql
-FROM pg_class t
-JOIN pg_namespace n ON n.oid = t.relnamespace
-JOIN pg_index ix ON ix.indrelid = t.oid
-JOIN pg_class i ON i.oid = ix.indexrelid
-JOIN pg_am am ON i.relam = am.oid
-JOIN pg_attribute a ON a.attrelid = t.oid AND a.attnum = ANY(ix.indkey)
-WHERE n.nspname = 'hist'
-  AND t.relkind = 'r'
-  AND i.relname !~* '_pkey$' AND i.relname !~* '^pk_'
- -- AND t.relname = 'your_table_name'
-GROUP BY i.relname, t.relname, am.amname, ix.indisunique, ix.indpred, ix.indrelid
-HAVING string_agg(quote_ident(a.attname), ', ' ORDER BY a.attnum) <> 'id'
-)
-select distinct on (replace(replace(create_index_sql,table_name,t.tablename),' ON ',' ON hist.')) t.schemaname,t.tablename,pnpi.table_name,index_name,cols,index_type
-,replace(replace(create_index_sql,table_name,t.tablename),' ON ',' ON hist.') create_index_sql
-,create_index_sql ol_sql
-from pg_class c inner join pg_tables t ON  c.relname = t.tablename
-			    inner join public_non_pk_idx pnpi ON c.relname ~ pnpi.table_name 
-where c.relkind = 'r' and t.schemaname = 'hist'
-and NOT EXISTS (
-SELECT 1
-FROM hist_idxs b
-where b.cols = pnpi.cols and b.table_name = t.tablename
-and b.index_type = pnpi.index_type
-
-)
-order by replace(replace(create_index_sql,table_name,t.tablename),' ON ',' ON hist.')
-LOOP 
-  RAISE NOTICE '%',rec.create_index_sql;
-  EXECUTE rec.create_index_sql;
-  END LOOP;
-
- END;
+    FOR rec IN
+        SELECT
+            ix.indisunique,
+            i.relname AS index_name,
+            t.relname AS table_name,
+            am.amname AS index_type,
+            string_agg(
+                quote_ident(a.attname),
+                ', '
+                ORDER BY a.attnum
+            ) AS cols,
+            COALESCE(pg_get_expr(ix.indpred, ix.indrelid), '') AS partial_clause,
+            'CREATE '
+            || CASE
+                   WHEN ix.indisunique THEN 'UNIQUE '
+                   ELSE ''
+               END
+            || 'INDEX '
+            || i.relname
+            || '_hist'
+            || ' ON hist.'
+            || t.relname
+            || '_hist'
+            || ' USING '
+            || am.amname
+            || ' ('
+            || string_agg(
+                   quote_ident(a.attname),
+                   ', '
+                   ORDER BY a.attnum
+               )
+            || ')'
+            || COALESCE(
+                   ' WHERE ' || pg_get_expr(ix.indpred, ix.indrelid),
+                   ''
+               )
+            || ';' AS create_index_sql
+        FROM pg_class t
+        JOIN pg_namespace n
+            ON n.oid = t.relnamespace
+        JOIN pg_index ix
+            ON ix.indrelid = t.oid
+        JOIN pg_class i
+            ON i.oid = ix.indexrelid
+        JOIN pg_am am
+            ON i.relam = am.oid
+        JOIN pg_attribute a
+            ON a.attrelid = t.oid
+           AND a.attnum = ANY (ix.indkey)
+        WHERE n.nspname = 'public'
+          AND t.relkind = 'r'
+          AND i.relname !~* '(pk|pkey)'
+        GROUP BY
+            i.relname,
+            t.relname,
+            am.amname,
+            ix.indisunique,
+            ix.indpred,
+            ix.indrelid
+    LOOP
+        RAISE NOTICE '%', rec.create_index_sql;
+        EXECUTE rec.create_index_sql;
+        COMMIT;
+    END LOOP;
+END;
 
 END;
 $BODY$
 LANGUAGE 'plpgsql';
-sql
 ```
 
 ## Dropping vs. Deleting: Retention Strategy in Practice
@@ -675,7 +676,7 @@ This system was designed to give you both the *surgical precision* of row-level 
 
 ## SQL Comparison
 
-```
+```sql
 CREATE OR REPLACE PROCEDURE public.delete_era_test()
 AS $$
 DECLARE
@@ -805,7 +806,7 @@ LANGUAGE 'plpgsql';
 Deletion takes about 1 minute and 50 seconds.
 
 ## VS.
-```
+```sql
 create or replace procedure drop_part()
 as
 $$
@@ -823,7 +824,7 @@ FROM (VALUES
   ('votes_hist'),
   ('postlinks_hist'),
   ('tags_hist'),
-  ('post_hist')
+  ('posts_hist')
 ) AS t(table_base)
 LOOP
 EXECUTE comm;
