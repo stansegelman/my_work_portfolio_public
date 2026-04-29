@@ -25,6 +25,8 @@ I'm a hands-on developer who works from first principles. I’ve been the person
 | 04    | [Finding Maximum Date](entry_04_neighboring_index_max/)   | Finding maximum date by using index on a relative column (Query Tuning)|
 | 05    | [Subpartition Strategies](entry_05_subpartition_table_strategies/)   | Subpartition strategies (Oprimization)|
 | 06    | [Recurisve CTE](entry_06_reopened_posts_with_recursive_cte/)| Finding specific records in all posts that have been reopend (Optimization)|
+| 07    | [Sort Spill Analysis](entry_07_sort_spill_analysis/)| Analyzing query plans for sort spills (Query Optimization)|
+
 ---
 
 ## 🧭 Philosophy
