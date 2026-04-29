@@ -12,6 +12,7 @@ I used this website to generate graphics for some of the execution plans:
 
 [remote website](https://explain.dalibo.com/)
 
+The data displayed is taken from snapshots of DBeaver.
 
 
 # Step 1 creates a distinct list of normalized parent post IDs. 
