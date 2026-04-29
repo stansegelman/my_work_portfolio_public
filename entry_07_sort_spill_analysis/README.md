@@ -382,7 +382,7 @@ FROM plan_cte
 WHERE node->>'Node Type' IN ('Sort', 'Incremental Sort')
 ORDER BY level;
 ```
-- ![data show 3](./diagrams/data_show2.jpg)
+- ![data show 3](./diagrams/data_show3.jpg)
 
 Result Interpretation
 G1 → Incremental Sort (in memory)
