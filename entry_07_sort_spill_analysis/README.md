@@ -288,7 +288,7 @@ This value is compared against the configured work_mem of 64 MB.
 
 Because this is an estimated plan, PostgreSQL does not yet report whether the sort will actually use memory or disk. The purpose of this step is to predict spill risk before the query is executed.
 
-- ![data show 1](./diagrams/data_show1.jpg)
+- ![data show 2](./diagrams/data_show2.jpg)
 
 The estimated output shows one clear transition point. G1 and G2 remain below the practical spill threshold, G3 becomes the borderline case, and G4/G5 are large enough that disk-based external merge sort is expected.
 
@@ -382,7 +382,7 @@ FROM plan_cte
 WHERE node->>'Node Type' IN ('Sort', 'Incremental Sort')
 ORDER BY level;
 ```
-- ![data show 2](./diagrams/data_show2.jpg)
+- ![data show 3](./diagrams/data_show2.jpg)
 
 Result Interpretation
 G1 → Incremental Sort (in memory)
