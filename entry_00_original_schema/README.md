@@ -83,4 +83,4 @@ This design:
 
 ## 🖼️ ER Diagram
 
-![Schema Overview](../diagrams/original_schema_overview.jpeg)
+![Schema Overview](/diagrams/original_schema_overview.jpeg)
