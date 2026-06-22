@@ -26,6 +26,7 @@ I'm a hands-on developer who works from first principles. I’ve been the person
 | 05    | [Subpartition Strategies](entry_05_subpartition_table_strategies/)   | Subpartition strategies (Oprimization)|
 | 06    | [Recurisve CTE](entry_06_reopened_posts_with_recursive_cte/)| Finding specific records in all posts that have been reopend (Optimization)|
 | 07    | [Sort Spill Analysis](entry_07_sort_spill_analysis/)| Analyzing query plans for sort spills (Query Optimization)|
+| 08    | [Time-Series User Scoring System](entry_08_time-series_user_scoring_system/)| How to create user's scores tracking system (Development)|
 
 ---
 
@@ -37,7 +38,7 @@ I'm a hands-on developer who works from first principles. I’ve been the person
 
 ## 📫 Contact
 
-- 📧 Email: [stanislav.segelman@gmail.com](mailto:stansegelman@gmail.com)
+- 📧 Email: [stansegelman@gmail.com](mailto:stansegelman@gmail.com)
 - 🌐 Location: Akron, Ohio (remote-friendly)
 - 🛠 GitHub: [github.com/stansegelman](https://github.com/stansegelman)
 
