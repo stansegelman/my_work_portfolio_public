@@ -1,4 +1,4 @@
-"user_id"|"creationdate"|"postid"|"action"|"score"|<span style="color:green">"tot"</span>|"idle_score"|"tot_idle_score"|"rwn"
+"user_id"|"creationdate"|"postid"|"action"|"score"|"tot"|"idle_score"|"tot_idle_score"|"rwn"
 --------|--------:|--------:|--------:|--------:|--------:|--------:|--------:|--------:
 🔴8014824|2021-12-31 00:00:00.000||idle|0|745|-1|-29|0
 🟢8014824|2022-01-01 00:00:00.000||idle|0|740|-1|0|1
