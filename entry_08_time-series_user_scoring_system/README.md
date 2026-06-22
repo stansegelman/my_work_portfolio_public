@@ -174,186 +174,178 @@
 
 
 
-<html>
-<style>
-.tot_score {
-    color: green;
-    font-weight: bold;
-}
-</style>
 <table>
 
 <tr><th colspan="9"></th></tr><tr><th>user_id</th><th>creationdate</th><th>postid</th><th>action</th><th>score</th><th>tot</th><th>idle_score</th><th>tot_idle_score</th><th>rwn</th></tr>
-<tr class="odd"><td>8014824</td><td>2021-12-31 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">745</td><td>-1</td><td>-29</td><td>0</td></tr>
-<tr><td>8014824</td><td>2022-01-01 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">740</td><td>-1</td><td>0</td><td>1</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-01-02 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">740</td><td>-1</td><td>-1</td><td>2</td></tr>
-<tr><td>8014824</td><td>2022-01-03 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">740</td><td>-1</td><td>-2</td><td>3</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-01-04 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">740</td><td>-1</td><td>-3</td><td>4</td></tr>
-<tr><td>8014824</td><td>2022-01-05 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">740</td><td>-1</td><td>-4</td><td>5</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-01-06 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">740</td><td>-1</td><td>-5</td><td>6</td></tr>
-<tr><td>8014824</td><td>2022-01-07 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">740</td><td>-1</td><td>-6</td><td>7</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-01-08 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">740</td><td>-1</td><td>-7</td><td>8</td></tr>
-<tr><td>8014824</td><td>2022-01-09 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">740</td><td>-1</td><td>-8</td><td>9</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-01-10 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">740</td><td>-1</td><td>-9</td><td>10</td></tr>
-<tr><td>8014824</td><td>2022-01-11 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">740</td><td>-1</td><td>-10</td><td>11</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-01-12 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">740</td><td>-1</td><td>-11</td><td>12</td></tr>
-<tr><td>8014824</td><td>2022-01-13 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">740</td><td>-1</td><td>-12</td><td>13</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-01-14 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">740</td><td>-1</td><td>-13</td><td>14</td></tr>
-<tr><td>8014824</td><td>2022-01-15 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">740</td><td>-1</td><td>-14</td><td>15</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-01-16 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">740</td><td>-1</td><td>-15</td><td>16</td></tr>
-<tr><td>8014824</td><td>2022-01-17 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">740</td><td>-1</td><td>-16</td><td>17</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-01-18 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">740</td><td>-1</td><td>-17</td><td>18</td></tr>
-<tr><td>8014824</td><td>2022-01-19 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">740</td><td>-1</td><td>-18</td><td>19</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-01-20 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">740</td><td>-1</td><td>-19</td><td>20</td></tr>
-<tr><td>8014824</td><td>2022-01-21 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">740</td><td>-1</td><td>-20</td><td>21</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-01-22 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">740</td><td>-1</td><td>-21</td><td>22</td></tr>
-<tr><td>8014824</td><td>2022-01-23 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">740</td><td>-1</td><td>-22</td><td>23</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-01-24 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">740</td><td>-1</td><td>-23</td><td>24</td></tr>
-<tr><td>8014824</td><td>2022-01-25 20:39:27.530</td><td>70855373</td><td>asked</td><td>3</td><td class="tot_score">743</td><td>0</td><td>0</td><td>25</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-01-25 21:05:09.870</td><td>70709385</td><td>commented</td><td>2</td><td class="tot_score">745</td><td>0</td><td>0</td><td>26</td></tr>
-<tr><td>8014824</td><td>2022-01-25 21:09:28.080</td><td>70764701</td><td>commented</td><td>2</td><td class="tot_score">747</td><td>0</td><td>0</td><td>27</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-01-25 21:14:02.083</td><td>66700604</td><td>commented</td><td>2</td><td class="tot_score">749</td><td>0</td><td>0</td><td>28</td></tr>
-<tr><td>8014824</td><td>2022-01-25 21:14:41.870</td><td>70772906</td><td>commented</td><td>2</td><td class="tot_score">751</td><td>0</td><td>0</td><td>29</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-01-25 21:19:42.260</td><td>57894281</td><td>commented</td><td>2</td><td class="tot_score">753</td><td>0</td><td>0</td><td>30</td></tr>
-<tr><td>8014824</td><td>2022-01-25 21:22:02.827</td><td>70777859</td><td>commented</td><td>2</td><td class="tot_score">755</td><td>0</td><td>0</td><td>31</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-01-25 21:25:06.313</td><td>70806391</td><td>commented</td><td>2</td><td class="tot_score">757</td><td>0</td><td>0</td><td>32</td></tr>
-<tr><td>8014824</td><td>2022-01-25 21:26:11.807</td><td>70816587</td><td>commented</td><td>2</td><td class="tot_score">759</td><td>0</td><td>0</td><td>33</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-01-25 21:44:38.397</td><td>70836226</td><td>commented</td><td>2</td><td class="tot_score">761</td><td>0</td><td>0</td><td>34</td></tr>
-<tr><td>8014824</td><td>2022-01-26 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">761</td><td>-1</td><td>-1</td><td>35</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-01-27 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">761</td><td>-1</td><td>-2</td><td>36</td></tr>
-<tr><td>8014824</td><td>2022-01-28 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">761</td><td>-1</td><td>-3</td><td>37</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-01-29 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">761</td><td>-1</td><td>-4</td><td>38</td></tr>
-<tr><td>8014824</td><td>2022-01-30 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">761</td><td>-1</td><td>-5</td><td>39</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-01-31 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">761</td><td>-1</td><td>-6</td><td>40</td></tr>
-<tr><td>8014824</td><td>2022-02-01 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">761</td><td>-1</td><td>-7</td><td>41</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-02-02 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">761</td><td>-1</td><td>-8</td><td>42</td></tr>
-<tr><td>8014824</td><td>2022-02-03 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">761</td><td>-1</td><td>-9</td><td>43</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-02-04 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">761</td><td>-1</td><td>-10</td><td>44</td></tr>
-<tr><td>8014824</td><td>2022-02-05 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">761</td><td>-1</td><td>-11</td><td>45</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-02-06 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">761</td><td>-1</td><td>-12</td><td>46</td></tr>
-<tr><td>8014824</td><td>2022-02-07 22:10:32.213</td><td>69320242</td><td>commented</td><td>2</td><td class="tot_score">763</td><td>0</td><td>0</td><td>47</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-02-08 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">763</td><td>-1</td><td>-1</td><td>48</td></tr>
-<tr><td>8014824</td><td>2022-02-09 00:00:00.000</td><td>60652908</td><td>voted</td><td>1</td><td class="tot_score">764</td><td>0</td><td>0</td><td>49</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-02-10 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">764</td><td>-1</td><td>-1</td><td>50</td></tr>
-<tr><td>8014824</td><td>2022-02-11 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">764</td><td>-1</td><td>-2</td><td>51</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-02-12 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">764</td><td>-1</td><td>-3</td><td>52</td></tr>
-<tr><td>8014824</td><td>2022-02-13 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">764</td><td>-1</td><td>-4</td><td>53</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-02-14 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">764</td><td>-1</td><td>-5</td><td>54</td></tr>
-<tr><td>8014824</td><td>2022-02-15 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">764</td><td>-1</td><td>-6</td><td>55</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-02-16 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">764</td><td>-1</td><td>-7</td><td>56</td></tr>
-<tr><td>8014824</td><td>2022-02-17 16:59:21.797</td><td>37229338</td><td>commented</td><td>2</td><td class="tot_score">766</td><td>0</td><td>0</td><td>57</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-02-17 17:11:59.353</td><td>37229338</td><td>commented</td><td>2</td><td class="tot_score">768</td><td>0</td><td>0</td><td>58</td></tr>
-<tr><td>8014824</td><td>2022-02-18 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">768</td><td>-1</td><td>-1</td><td>59</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-02-19 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">768</td><td>-1</td><td>-2</td><td>60</td></tr>
-<tr><td>8014824</td><td>2022-02-20 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">768</td><td>-1</td><td>-3</td><td>61</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-02-21 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">768</td><td>-1</td><td>-4</td><td>62</td></tr>
-<tr><td>8014824</td><td>2022-02-22 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">768</td><td>-1</td><td>-5</td><td>63</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-02-23 20:21:25.870</td><td>71243583</td><td>not accepted answer</td><td>5</td><td class="tot_score">773</td><td>0</td><td>0</td><td>64</td></tr>
-<tr><td>8014824</td><td>2022-02-24 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">773</td><td>-1</td><td>-1</td><td>65</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-02-25 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">773</td><td>-1</td><td>-2</td><td>66</td></tr>
-<tr><td>8014824</td><td>2022-02-26 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">773</td><td>-1</td><td>-3</td><td>67</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-02-27 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">773</td><td>-1</td><td>-4</td><td>68</td></tr>
-<tr><td>8014824</td><td>2022-02-28 00:00:00.000</td><td>61316005</td><td>voted</td><td>1</td><td class="tot_score">774</td><td>0</td><td>0</td><td>69</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-03-01 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">774</td><td>-1</td><td>-1</td><td>70</td></tr>
-<tr><td>8014824</td><td>2022-03-02 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">774</td><td>-1</td><td>-2</td><td>71</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-03-03 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">774</td><td>-1</td><td>-3</td><td>72</td></tr>
-<tr><td>8014824</td><td>2022-03-04 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">774</td><td>-1</td><td>-4</td><td>73</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-03-05 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">774</td><td>-1</td><td>-5</td><td>74</td></tr>
-<tr><td>8014824</td><td>2022-03-06 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">774</td><td>-1</td><td>-6</td><td>75</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-03-07 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">774</td><td>-1</td><td>-7</td><td>76</td></tr>
-<tr><td>8014824</td><td>2022-03-08 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">774</td><td>-1</td><td>-8</td><td>77</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-03-09 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">774</td><td>-1</td><td>-9</td><td>78</td></tr>
-<tr><td>8014824</td><td>2022-03-10 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">774</td><td>-1</td><td>-10</td><td>79</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-03-11 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">774</td><td>-1</td><td>-11</td><td>80</td></tr>
-<tr><td>8014824</td><td>2022-03-12 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">774</td><td>-1</td><td>-12</td><td>81</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-03-13 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">774</td><td>-1</td><td>-13</td><td>82</td></tr>
-<tr><td>8014824</td><td>2022-03-14 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">774</td><td>-1</td><td>-14</td><td>83</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-03-15 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">774</td><td>-1</td><td>-15</td><td>84</td></tr>
-<tr><td>8014824</td><td>2022-03-16 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">774</td><td>-1</td><td>-16</td><td>85</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-03-17 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">774</td><td>-1</td><td>-17</td><td>86</td></tr>
-<tr><td>8014824</td><td>2022-03-18 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">774</td><td>-1</td><td>-18</td><td>87</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-03-19 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">774</td><td>-1</td><td>-19</td><td>88</td></tr>
-<tr><td>8014824</td><td>2022-03-20 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">774</td><td>-1</td><td>-20</td><td>89</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-03-21 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">774</td><td>-1</td><td>-21</td><td>90</td></tr>
-<tr><td>8014824</td><td>2022-03-22 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">774</td><td>-1</td><td>-22</td><td>91</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-03-23 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">774</td><td>-1</td><td>-23</td><td>92</td></tr>
-<tr><td>8014824</td><td>2022-03-24 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">774</td><td>-1</td><td>-24</td><td>93</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-03-25 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">774</td><td>-1</td><td>-25</td><td>94</td></tr>
-<tr><td>8014824</td><td>2022-03-26 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">774</td><td>-1</td><td>-26</td><td>95</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-03-27 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">774</td><td>-1</td><td>-27</td><td>96</td></tr>
-<tr><td>8014824</td><td>2022-03-28 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">774</td><td>-1</td><td>-28</td><td>97</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-03-29 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">774</td><td>-1</td><td>-29</td><td>98</td></tr>
-<tr><td>8014824</td><td>2022-03-30 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">769</td><td>-1</td><td>0</td><td>99</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-03-31 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">769</td><td>-1</td><td>-1</td><td>100</td></tr>
-<tr><td>8014824</td><td>2022-04-01 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">769</td><td>-1</td><td>-2</td><td>101</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-04-02 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">769</td><td>-1</td><td>-3</td><td>102</td></tr>
-<tr><td>8014824</td><td>2022-04-03 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">769</td><td>-1</td><td>-4</td><td>103</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-04-04 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">769</td><td>-1</td><td>-5</td><td>104</td></tr>
-<tr><td>8014824</td><td>2022-04-05 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">769</td><td>-1</td><td>-6</td><td>105</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-04-06 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">769</td><td>-1</td><td>-7</td><td>106</td></tr>
-<tr><td>8014824</td><td>2022-04-07 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">769</td><td>-1</td><td>-8</td><td>107</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-04-08 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">769</td><td>-1</td><td>-9</td><td>108</td></tr>
-<tr><td>8014824</td><td>2022-04-09 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">769</td><td>-1</td><td>-10</td><td>109</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-04-10 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">769</td><td>-1</td><td>-11</td><td>110</td></tr>
-<tr><td>8014824</td><td>2022-04-11 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">769</td><td>-1</td><td>-12</td><td>111</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-04-12 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">769</td><td>-1</td><td>-13</td><td>112</td></tr>
-<tr><td>8014824</td><td>2022-04-13 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">769</td><td>-1</td><td>-14</td><td>113</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-04-14 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">769</td><td>-1</td><td>-15</td><td>114</td></tr>
-<tr><td>8014824</td><td>2022-04-15 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">769</td><td>-1</td><td>-16</td><td>115</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-04-16 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">769</td><td>-1</td><td>-17</td><td>116</td></tr>
-<tr><td>8014824</td><td>2022-04-17 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">769</td><td>-1</td><td>-18</td><td>117</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-04-18 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">769</td><td>-1</td><td>-19</td><td>118</td></tr>
-<tr><td>8014824</td><td>2022-04-19 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">769</td><td>-1</td><td>-20</td><td>119</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-04-20 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">769</td><td>-1</td><td>-21</td><td>120</td></tr>
-<tr><td>8014824</td><td>2022-04-21 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">769</td><td>-1</td><td>-22</td><td>121</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-04-22 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">769</td><td>-1</td><td>-23</td><td>122</td></tr>
-<tr><td>8014824</td><td>2022-04-23 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">769</td><td>-1</td><td>-24</td><td>123</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-04-24 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">769</td><td>-1</td><td>-25</td><td>124</td></tr>
-<tr><td>8014824</td><td>2022-04-25 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">769</td><td>-1</td><td>-26</td><td>125</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-04-26 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">769</td><td>-1</td><td>-27</td><td>126</td></tr>
-<tr><td>8014824</td><td>2022-04-27 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">769</td><td>-1</td><td>-28</td><td>127</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-04-28 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">769</td><td>-1</td><td>-29</td><td>128</td></tr>
-<tr><td>8014824</td><td>2022-04-29 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">764</td><td>-1</td><td>0</td><td>129</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-04-30 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">764</td><td>-1</td><td>-1</td><td>130</td></tr>
-<tr><td>8014824</td><td>2022-05-01 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">764</td><td>-1</td><td>-2</td><td>131</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-05-02 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">764</td><td>-1</td><td>-3</td><td>132</td></tr>
-<tr><td>8014824</td><td>2022-05-03 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">764</td><td>-1</td><td>-4</td><td>133</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-05-04 14:52:41.273</td><td>72115079</td><td>asked</td><td>3</td><td class="tot_score">767</td><td>0</td><td>0</td><td>134</td></tr>
-<tr><td>8014824</td><td>2022-05-05 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">767</td><td>-1</td><td>-1</td><td>135</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-05-06 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">767</td><td>-1</td><td>-2</td><td>136</td></tr>
-<tr><td>8014824</td><td>2022-05-07 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">767</td><td>-1</td><td>-3</td><td>137</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-05-08 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">767</td><td>-1</td><td>-4</td><td>138</td></tr>
-<tr><td>8014824</td><td>2022-05-09 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">767</td><td>-1</td><td>-5</td><td>139</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-05-10 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">767</td><td>-1</td><td>-6</td><td>140</td></tr>
-<tr><td>8014824</td><td>2022-05-11 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">767</td><td>-1</td><td>-7</td><td>141</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-05-12 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">767</td><td>-1</td><td>-8</td><td>142</td></tr>
-<tr><td>8014824</td><td>2022-05-13 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">767</td><td>-1</td><td>-9</td><td>143</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-05-14 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">767</td><td>-1</td><td>-10</td><td>144</td></tr>
-<tr><td>8014824</td><td>2022-05-15 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">767</td><td>-1</td><td>-11</td><td>145</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-05-16 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">767</td><td>-1</td><td>-12</td><td>146</td></tr>
-<tr><td>8014824</td><td>2022-05-17 20:19:08.417</td><td>72280192</td><td>asked</td><td>3</td><td class="tot_score">770</td><td>0</td><td>0</td><td>147</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-05-17 20:19:08.417</td><td>72280193</td><td>not accepted answer</td><td>5</td><td class="tot_score">775</td><td>0</td><td>0</td><td>148</td></tr>
-<tr><td>8014824</td><td>2022-05-18 00:00:00.000</td><td>72115079</td><td>voted</td><td>1</td><td class="tot_score">776</td><td>0</td><td>0</td><td>149</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-05-18 07:58:09.127</td><td>72285262</td><td>not accepted answer</td><td>5</td><td class="tot_score">781</td><td>0</td><td>0</td><td>150</td></tr>
-<tr><td>8014824</td><td>2022-05-18 13:05:42.420</td><td>72115079</td><td>commented</td><td>2</td><td class="tot_score">783</td><td>0</td><td>0</td><td>151</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-05-18 14:47:40.190</td><td>72115079</td><td>commented</td><td>2</td><td class="tot_score">785</td><td>0</td><td>0</td><td>152</td></tr>
-<tr><td>8014824</td><td>2022-05-19 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">785</td><td>-1</td><td>-1</td><td>153</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-05-20 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">785</td><td>-1</td><td>-2</td><td>154</td></tr>
-<tr><td>8014824</td><td>2022-05-21 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">785</td><td>-1</td><td>-3</td><td>155</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-05-22 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">785</td><td>-1</td><td>-4</td><td>156</td></tr>
-<tr><td>8014824</td><td>2022-05-23 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">785</td><td>-1</td><td>-5</td><td>157</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-05-24 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">785</td><td>-1</td><td>-6</td><td>158</td></tr>
-<tr><td>8014824</td><td>2022-05-25 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">785</td><td>-1</td><td>-7</td><td>159</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-05-26 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">785</td><td>-1</td><td>-8</td><td>160</td></tr>
-<tr><td>8014824</td><td>2022-05-27 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">785</td><td>-1</td><td>-9</td><td>161</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-05-28 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">785</td><td>-1</td><td>-10</td><td>162</td></tr>
-<tr><td>8014824</td><td>2022-05-29 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">785</td><td>-1</td><td>-11</td><td>163</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-05-30 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">785</td><td>-1</td><td>-12</td><td>164</td></tr>
-<tr><td>8014824</td><td>2022-05-31 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">785</td><td>-1</td><td>-13</td><td>165</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-06-01 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">785</td><td>-1</td><td>-14</td><td>166</td></tr>
-<tr><td>8014824</td><td>2022-06-02 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">785</td><td>-1</td><td>-15</td><td>167</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-06-03 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">785</td><td>-1</td><td>-16</td><td>168</td></tr>
-<tr><td>8014824</td><td>2022-06-04 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">785</td><td>-1</td><td>-17</td><td>169</td></tr>
-<tr class="odd"><td>8014824</td><td>2022-06-05 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">785</td><td>-1</td><td>-18</td><td>170</td></tr>
+<tr class="odd"><td>8014824</td><td>2021-12-31 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">745</td><td>-1</td><td>-29</td><td>0</td></tr>
+<tr><td>8014824</td><td>2022-01-01 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">740</td><td>-1</td><td>0</td><td>1</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-01-02 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">740</td><td>-1</td><td>-1</td><td>2</td></tr>
+<tr><td>8014824</td><td>2022-01-03 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">740</td><td>-1</td><td>-2</td><td>3</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-01-04 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">740</td><td>-1</td><td>-3</td><td>4</td></tr>
+<tr><td>8014824</td><td>2022-01-05 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">740</td><td>-1</td><td>-4</td><td>5</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-01-06 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">740</td><td>-1</td><td>-5</td><td>6</td></tr>
+<tr><td>8014824</td><td>2022-01-07 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">740</td><td>-1</td><td>-6</td><td>7</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-01-08 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">740</td><td>-1</td><td>-7</td><td>8</td></tr>
+<tr><td>8014824</td><td>2022-01-09 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">740</td><td>-1</td><td>-8</td><td>9</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-01-10 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">740</td><td>-1</td><td>-9</td><td>10</td></tr>
+<tr><td>8014824</td><td>2022-01-11 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">740</td><td>-1</td><td>-10</td><td>11</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-01-12 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">740</td><td>-1</td><td>-11</td><td>12</td></tr>
+<tr><td>8014824</td><td>2022-01-13 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">740</td><td>-1</td><td>-12</td><td>13</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-01-14 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">740</td><td>-1</td><td>-13</td><td>14</td></tr>
+<tr><td>8014824</td><td>2022-01-15 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">740</td><td>-1</td><td>-14</td><td>15</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-01-16 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">740</td><td>-1</td><td>-15</td><td>16</td></tr>
+<tr><td>8014824</td><td>2022-01-17 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">740</td><td>-1</td><td>-16</td><td>17</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-01-18 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">740</td><td>-1</td><td>-17</td><td>18</td></tr>
+<tr><td>8014824</td><td>2022-01-19 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">740</td><td>-1</td><td>-18</td><td>19</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-01-20 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">740</td><td>-1</td><td>-19</td><td>20</td></tr>
+<tr><td>8014824</td><td>2022-01-21 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">740</td><td>-1</td><td>-20</td><td>21</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-01-22 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">740</td><td>-1</td><td>-21</td><td>22</td></tr>
+<tr><td>8014824</td><td>2022-01-23 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">740</td><td>-1</td><td>-22</td><td>23</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-01-24 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">740</td><td>-1</td><td>-23</td><td>24</td></tr>
+<tr><td>8014824</td><td>2022-01-25 20:39:27.530</td><td>70855373</td><td>asked</td><td>3</td><td style="color:green;font-weight:bold;">743</td><td>0</td><td>0</td><td>25</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-01-25 21:05:09.870</td><td>70709385</td><td>commented</td><td>2</td><td style="color:green;font-weight:bold;">745</td><td>0</td><td>0</td><td>26</td></tr>
+<tr><td>8014824</td><td>2022-01-25 21:09:28.080</td><td>70764701</td><td>commented</td><td>2</td><td style="color:green;font-weight:bold;">747</td><td>0</td><td>0</td><td>27</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-01-25 21:14:02.083</td><td>66700604</td><td>commented</td><td>2</td><td style="color:green;font-weight:bold;">749</td><td>0</td><td>0</td><td>28</td></tr>
+<tr><td>8014824</td><td>2022-01-25 21:14:41.870</td><td>70772906</td><td>commented</td><td>2</td><td style="color:green;font-weight:bold;">751</td><td>0</td><td>0</td><td>29</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-01-25 21:19:42.260</td><td>57894281</td><td>commented</td><td>2</td><td style="color:green;font-weight:bold;">753</td><td>0</td><td>0</td><td>30</td></tr>
+<tr><td>8014824</td><td>2022-01-25 21:22:02.827</td><td>70777859</td><td>commented</td><td>2</td><td style="color:green;font-weight:bold;">755</td><td>0</td><td>0</td><td>31</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-01-25 21:25:06.313</td><td>70806391</td><td>commented</td><td>2</td><td style="color:green;font-weight:bold;">757</td><td>0</td><td>0</td><td>32</td></tr>
+<tr><td>8014824</td><td>2022-01-25 21:26:11.807</td><td>70816587</td><td>commented</td><td>2</td><td style="color:green;font-weight:bold;">759</td><td>0</td><td>0</td><td>33</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-01-25 21:44:38.397</td><td>70836226</td><td>commented</td><td>2</td><td style="color:green;font-weight:bold;">761</td><td>0</td><td>0</td><td>34</td></tr>
+<tr><td>8014824</td><td>2022-01-26 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">761</td><td>-1</td><td>-1</td><td>35</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-01-27 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">761</td><td>-1</td><td>-2</td><td>36</td></tr>
+<tr><td>8014824</td><td>2022-01-28 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">761</td><td>-1</td><td>-3</td><td>37</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-01-29 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">761</td><td>-1</td><td>-4</td><td>38</td></tr>
+<tr><td>8014824</td><td>2022-01-30 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">761</td><td>-1</td><td>-5</td><td>39</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-01-31 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">761</td><td>-1</td><td>-6</td><td>40</td></tr>
+<tr><td>8014824</td><td>2022-02-01 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">761</td><td>-1</td><td>-7</td><td>41</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-02-02 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">761</td><td>-1</td><td>-8</td><td>42</td></tr>
+<tr><td>8014824</td><td>2022-02-03 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">761</td><td>-1</td><td>-9</td><td>43</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-02-04 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">761</td><td>-1</td><td>-10</td><td>44</td></tr>
+<tr><td>8014824</td><td>2022-02-05 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">761</td><td>-1</td><td>-11</td><td>45</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-02-06 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">761</td><td>-1</td><td>-12</td><td>46</td></tr>
+<tr><td>8014824</td><td>2022-02-07 22:10:32.213</td><td>69320242</td><td>commented</td><td>2</td><td style="color:green;font-weight:bold;">763</td><td>0</td><td>0</td><td>47</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-02-08 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">763</td><td>-1</td><td>-1</td><td>48</td></tr>
+<tr><td>8014824</td><td>2022-02-09 00:00:00.000</td><td>60652908</td><td>voted</td><td>1</td><td style="color:green;font-weight:bold;">764</td><td>0</td><td>0</td><td>49</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-02-10 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">764</td><td>-1</td><td>-1</td><td>50</td></tr>
+<tr><td>8014824</td><td>2022-02-11 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">764</td><td>-1</td><td>-2</td><td>51</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-02-12 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">764</td><td>-1</td><td>-3</td><td>52</td></tr>
+<tr><td>8014824</td><td>2022-02-13 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">764</td><td>-1</td><td>-4</td><td>53</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-02-14 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">764</td><td>-1</td><td>-5</td><td>54</td></tr>
+<tr><td>8014824</td><td>2022-02-15 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">764</td><td>-1</td><td>-6</td><td>55</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-02-16 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">764</td><td>-1</td><td>-7</td><td>56</td></tr>
+<tr><td>8014824</td><td>2022-02-17 16:59:21.797</td><td>37229338</td><td>commented</td><td>2</td><td style="color:green;font-weight:bold;">766</td><td>0</td><td>0</td><td>57</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-02-17 17:11:59.353</td><td>37229338</td><td>commented</td><td>2</td><td style="color:green;font-weight:bold;">768</td><td>0</td><td>0</td><td>58</td></tr>
+<tr><td>8014824</td><td>2022-02-18 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">768</td><td>-1</td><td>-1</td><td>59</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-02-19 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">768</td><td>-1</td><td>-2</td><td>60</td></tr>
+<tr><td>8014824</td><td>2022-02-20 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">768</td><td>-1</td><td>-3</td><td>61</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-02-21 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">768</td><td>-1</td><td>-4</td><td>62</td></tr>
+<tr><td>8014824</td><td>2022-02-22 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">768</td><td>-1</td><td>-5</td><td>63</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-02-23 20:21:25.870</td><td>71243583</td><td>not accepted answer</td><td>5</td><td style="color:green;font-weight:bold;">773</td><td>0</td><td>0</td><td>64</td></tr>
+<tr><td>8014824</td><td>2022-02-24 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">773</td><td>-1</td><td>-1</td><td>65</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-02-25 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">773</td><td>-1</td><td>-2</td><td>66</td></tr>
+<tr><td>8014824</td><td>2022-02-26 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">773</td><td>-1</td><td>-3</td><td>67</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-02-27 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">773</td><td>-1</td><td>-4</td><td>68</td></tr>
+<tr><td>8014824</td><td>2022-02-28 00:00:00.000</td><td>61316005</td><td>voted</td><td>1</td><td style="color:green;font-weight:bold;">774</td><td>0</td><td>0</td><td>69</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-03-01 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">774</td><td>-1</td><td>-1</td><td>70</td></tr>
+<tr><td>8014824</td><td>2022-03-02 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">774</td><td>-1</td><td>-2</td><td>71</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-03-03 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">774</td><td>-1</td><td>-3</td><td>72</td></tr>
+<tr><td>8014824</td><td>2022-03-04 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">774</td><td>-1</td><td>-4</td><td>73</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-03-05 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">774</td><td>-1</td><td>-5</td><td>74</td></tr>
+<tr><td>8014824</td><td>2022-03-06 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">774</td><td>-1</td><td>-6</td><td>75</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-03-07 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">774</td><td>-1</td><td>-7</td><td>76</td></tr>
+<tr><td>8014824</td><td>2022-03-08 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">774</td><td>-1</td><td>-8</td><td>77</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-03-09 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">774</td><td>-1</td><td>-9</td><td>78</td></tr>
+<tr><td>8014824</td><td>2022-03-10 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">774</td><td>-1</td><td>-10</td><td>79</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-03-11 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">774</td><td>-1</td><td>-11</td><td>80</td></tr>
+<tr><td>8014824</td><td>2022-03-12 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">774</td><td>-1</td><td>-12</td><td>81</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-03-13 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">774</td><td>-1</td><td>-13</td><td>82</td></tr>
+<tr><td>8014824</td><td>2022-03-14 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">774</td><td>-1</td><td>-14</td><td>83</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-03-15 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">774</td><td>-1</td><td>-15</td><td>84</td></tr>
+<tr><td>8014824</td><td>2022-03-16 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">774</td><td>-1</td><td>-16</td><td>85</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-03-17 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">774</td><td>-1</td><td>-17</td><td>86</td></tr>
+<tr><td>8014824</td><td>2022-03-18 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">774</td><td>-1</td><td>-18</td><td>87</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-03-19 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">774</td><td>-1</td><td>-19</td><td>88</td></tr>
+<tr><td>8014824</td><td>2022-03-20 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">774</td><td>-1</td><td>-20</td><td>89</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-03-21 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">774</td><td>-1</td><td>-21</td><td>90</td></tr>
+<tr><td>8014824</td><td>2022-03-22 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">774</td><td>-1</td><td>-22</td><td>91</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-03-23 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">774</td><td>-1</td><td>-23</td><td>92</td></tr>
+<tr><td>8014824</td><td>2022-03-24 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">774</td><td>-1</td><td>-24</td><td>93</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-03-25 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">774</td><td>-1</td><td>-25</td><td>94</td></tr>
+<tr><td>8014824</td><td>2022-03-26 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">774</td><td>-1</td><td>-26</td><td>95</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-03-27 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">774</td><td>-1</td><td>-27</td><td>96</td></tr>
+<tr><td>8014824</td><td>2022-03-28 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">774</td><td>-1</td><td>-28</td><td>97</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-03-29 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">774</td><td>-1</td><td>-29</td><td>98</td></tr>
+<tr><td>8014824</td><td>2022-03-30 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">769</td><td>-1</td><td>0</td><td>99</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-03-31 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">769</td><td>-1</td><td>-1</td><td>100</td></tr>
+<tr><td>8014824</td><td>2022-04-01 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">769</td><td>-1</td><td>-2</td><td>101</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-04-02 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">769</td><td>-1</td><td>-3</td><td>102</td></tr>
+<tr><td>8014824</td><td>2022-04-03 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">769</td><td>-1</td><td>-4</td><td>103</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-04-04 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">769</td><td>-1</td><td>-5</td><td>104</td></tr>
+<tr><td>8014824</td><td>2022-04-05 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">769</td><td>-1</td><td>-6</td><td>105</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-04-06 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">769</td><td>-1</td><td>-7</td><td>106</td></tr>
+<tr><td>8014824</td><td>2022-04-07 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">769</td><td>-1</td><td>-8</td><td>107</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-04-08 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">769</td><td>-1</td><td>-9</td><td>108</td></tr>
+<tr><td>8014824</td><td>2022-04-09 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">769</td><td>-1</td><td>-10</td><td>109</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-04-10 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">769</td><td>-1</td><td>-11</td><td>110</td></tr>
+<tr><td>8014824</td><td>2022-04-11 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">769</td><td>-1</td><td>-12</td><td>111</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-04-12 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">769</td><td>-1</td><td>-13</td><td>112</td></tr>
+<tr><td>8014824</td><td>2022-04-13 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">769</td><td>-1</td><td>-14</td><td>113</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-04-14 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">769</td><td>-1</td><td>-15</td><td>114</td></tr>
+<tr><td>8014824</td><td>2022-04-15 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">769</td><td>-1</td><td>-16</td><td>115</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-04-16 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">769</td><td>-1</td><td>-17</td><td>116</td></tr>
+<tr><td>8014824</td><td>2022-04-17 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">769</td><td>-1</td><td>-18</td><td>117</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-04-18 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">769</td><td>-1</td><td>-19</td><td>118</td></tr>
+<tr><td>8014824</td><td>2022-04-19 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">769</td><td>-1</td><td>-20</td><td>119</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-04-20 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">769</td><td>-1</td><td>-21</td><td>120</td></tr>
+<tr><td>8014824</td><td>2022-04-21 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">769</td><td>-1</td><td>-22</td><td>121</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-04-22 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">769</td><td>-1</td><td>-23</td><td>122</td></tr>
+<tr><td>8014824</td><td>2022-04-23 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">769</td><td>-1</td><td>-24</td><td>123</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-04-24 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">769</td><td>-1</td><td>-25</td><td>124</td></tr>
+<tr><td>8014824</td><td>2022-04-25 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">769</td><td>-1</td><td>-26</td><td>125</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-04-26 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">769</td><td>-1</td><td>-27</td><td>126</td></tr>
+<tr><td>8014824</td><td>2022-04-27 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">769</td><td>-1</td><td>-28</td><td>127</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-04-28 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">769</td><td>-1</td><td>-29</td><td>128</td></tr>
+<tr><td>8014824</td><td>2022-04-29 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">764</td><td>-1</td><td>0</td><td>129</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-04-30 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">764</td><td>-1</td><td>-1</td><td>130</td></tr>
+<tr><td>8014824</td><td>2022-05-01 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">764</td><td>-1</td><td>-2</td><td>131</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-05-02 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">764</td><td>-1</td><td>-3</td><td>132</td></tr>
+<tr><td>8014824</td><td>2022-05-03 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">764</td><td>-1</td><td>-4</td><td>133</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-05-04 14:52:41.273</td><td>72115079</td><td>asked</td><td>3</td><td style="color:green;font-weight:bold;">767</td><td>0</td><td>0</td><td>134</td></tr>
+<tr><td>8014824</td><td>2022-05-05 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">767</td><td>-1</td><td>-1</td><td>135</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-05-06 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">767</td><td>-1</td><td>-2</td><td>136</td></tr>
+<tr><td>8014824</td><td>2022-05-07 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">767</td><td>-1</td><td>-3</td><td>137</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-05-08 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">767</td><td>-1</td><td>-4</td><td>138</td></tr>
+<tr><td>8014824</td><td>2022-05-09 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">767</td><td>-1</td><td>-5</td><td>139</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-05-10 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">767</td><td>-1</td><td>-6</td><td>140</td></tr>
+<tr><td>8014824</td><td>2022-05-11 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">767</td><td>-1</td><td>-7</td><td>141</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-05-12 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">767</td><td>-1</td><td>-8</td><td>142</td></tr>
+<tr><td>8014824</td><td>2022-05-13 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">767</td><td>-1</td><td>-9</td><td>143</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-05-14 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">767</td><td>-1</td><td>-10</td><td>144</td></tr>
+<tr><td>8014824</td><td>2022-05-15 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">767</td><td>-1</td><td>-11</td><td>145</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-05-16 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">767</td><td>-1</td><td>-12</td><td>146</td></tr>
+<tr><td>8014824</td><td>2022-05-17 20:19:08.417</td><td>72280192</td><td>asked</td><td>3</td><td style="color:green;font-weight:bold;">770</td><td>0</td><td>0</td><td>147</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-05-17 20:19:08.417</td><td>72280193</td><td>not accepted answer</td><td>5</td><td style="color:green;font-weight:bold;">775</td><td>0</td><td>0</td><td>148</td></tr>
+<tr><td>8014824</td><td>2022-05-18 00:00:00.000</td><td>72115079</td><td>voted</td><td>1</td><td style="color:green;font-weight:bold;">776</td><td>0</td><td>0</td><td>149</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-05-18 07:58:09.127</td><td>72285262</td><td>not accepted answer</td><td>5</td><td style="color:green;font-weight:bold;">781</td><td>0</td><td>0</td><td>150</td></tr>
+<tr><td>8014824</td><td>2022-05-18 13:05:42.420</td><td>72115079</td><td>commented</td><td>2</td><td style="color:green;font-weight:bold;">783</td><td>0</td><td>0</td><td>151</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-05-18 14:47:40.190</td><td>72115079</td><td>commented</td><td>2</td><td style="color:green;font-weight:bold;">785</td><td>0</td><td>0</td><td>152</td></tr>
+<tr><td>8014824</td><td>2022-05-19 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">785</td><td>-1</td><td>-1</td><td>153</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-05-20 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">785</td><td>-1</td><td>-2</td><td>154</td></tr>
+<tr><td>8014824</td><td>2022-05-21 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">785</td><td>-1</td><td>-3</td><td>155</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-05-22 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">785</td><td>-1</td><td>-4</td><td>156</td></tr>
+<tr><td>8014824</td><td>2022-05-23 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">785</td><td>-1</td><td>-5</td><td>157</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-05-24 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">785</td><td>-1</td><td>-6</td><td>158</td></tr>
+<tr><td>8014824</td><td>2022-05-25 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">785</td><td>-1</td><td>-7</td><td>159</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-05-26 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">785</td><td>-1</td><td>-8</td><td>160</td></tr>
+<tr><td>8014824</td><td>2022-05-27 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">785</td><td>-1</td><td>-9</td><td>161</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-05-28 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">785</td><td>-1</td><td>-10</td><td>162</td></tr>
+<tr><td>8014824</td><td>2022-05-29 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">785</td><td>-1</td><td>-11</td><td>163</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-05-30 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">785</td><td>-1</td><td>-12</td><td>164</td></tr>
+<tr><td>8014824</td><td>2022-05-31 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">785</td><td>-1</td><td>-13</td><td>165</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-06-01 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">785</td><td>-1</td><td>-14</td><td>166</td></tr>
+<tr><td>8014824</td><td>2022-06-02 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">785</td><td>-1</td><td>-15</td><td>167</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-06-03 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">785</td><td>-1</td><td>-16</td><td>168</td></tr>
+<tr><td>8014824</td><td>2022-06-04 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">785</td><td>-1</td><td>-17</td><td>169</td></tr>
+<tr class="odd"><td>8014824</td><td>2022-06-05 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">785</td><td>-1</td><td>-18</td><td>170</td></tr>
 </table>
-</html>
