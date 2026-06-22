@@ -173,13 +173,15 @@
 🟢8014824|2022-06-05 00:00:00.000||idle|0|785|-1|-18|170
 
 
+
+<table>
 <style>
 .tot_score {
     color: green;
     font-weight: bold;
 }
 </style>
-<table><tr><th colspan="9"></th></tr><tr><th>user_id</th><th>creationdate</th><th>postid</th><th>action</th><th>score</th><th>tot</th><th>idle_score</th><th>tot_idle_score</th><th>rwn</th></tr>
+<tr><th colspan="9"></th></tr><tr><th>user_id</th><th>creationdate</th><th>postid</th><th>action</th><th>score</th><th>tot</th><th>idle_score</th><th>tot_idle_score</th><th>rwn</th></tr>
 <tr class="odd"><td>8014824</td><td>2021-12-31 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">745</td><td>-1</td><td>-29</td><td>0</td></tr>
 <tr><td>8014824</td><td>2022-01-01 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">740</td><td>-1</td><td>0</td><td>1</td></tr>
 <tr class="odd"><td>8014824</td><td>2022-01-02 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td class="tot_score">740</td><td>-1</td><td>-1</td><td>2</td></tr>
