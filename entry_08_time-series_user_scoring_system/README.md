@@ -173,7 +173,7 @@
 🟢8014824|2022-06-05 00:00:00.000||idle|0|785|-1|-18|170
 
 
-
+<html>
 <table>
 
 <tr><th colspan="9"></th></tr><tr><th>user_id</th><th>creationdate</th><th>postid</th><th>action</th><th>score</th><th>tot</th><th>idle_score</th><th>tot_idle_score</th><th>rwn</th></tr>
@@ -349,3 +349,4 @@
 <tr><td>8014824</td><td>2022-06-04 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">785</td><td>-1</td><td>-17</td><td>169</td></tr>
 <tr class="odd"><td>8014824</td><td>2022-06-05 00:00:00.000</td><td>&nbsp;</td><td>idle</td><td>0</td><td style="color:green;font-weight:bold;">785</td><td>-1</td><td>-18</td><td>170</td></tr>
 </table>
+</html>
