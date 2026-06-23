@@ -1,7 +1,7 @@
 | Event | Points |
 |--------|--------:|
 | 🟩 Question Asked | +3 |
-| 🟩 Answer Posted but not accepted | +5 |
+| 🟩 Answer Posted But Not Accepted | +5 |
 | 🟩 Accepted Answer | +10 |
 | 🟩 Comment Posted | +2 |
 | 🟩 Vote Cast | +1 |
