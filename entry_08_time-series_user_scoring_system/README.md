@@ -1,3 +1,15 @@
+| Event | Points |
+|--------|--------:|
+| 🟩 Question Asked | +3 |
+| 🟩 Answer Posted | +5 |
+| 🟩 Accepted Answer | +10 |
+| 🟩 Comment Posted | +2 |
+| 🟩 Vote Cast | +1 |
+| 🟥 30 Consecutive Idle Days | -5 |
+
+
+
+
 "user_id"|"creationdate"|"postid"|"action"|"score"|🟢"tot"|"idle_score"|"tot_idle_score"|"rwn"
 --------|--------:|--------:|--------:|--------:|--------:|--------:|--------:|--------:
 🔴8014824|🔴2021-12-31 00:00:00.000|🔴|🔴idle|🔴0|🔴745|🔴-1|🔴-29|🔴0
