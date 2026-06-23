@@ -28,6 +28,20 @@ Each user activity is converted into a scoring event and assigned a predefined w
 
 The sample below demonstrates how the scoring system evolves over time. The row marked with 🔴 red indicators represents a previously calculated seed record loaded from persistent storage. This record is used to resume score calculations from the last known state and is excluded from the final output. It is displayed here only to illustrate how incremental processing continues from previously calculated data. The 🟢 green indicators highlight the `tot` column, which contains the user's cumulative score after all activity and inactivity adjustments have been applied.
 
+### Column Definitions
+
+| Column           | Description                                                                                      |
+| ---------------- | ------------------------------------------------------------------------------------------------ |
+| `user_id`        | Stack Overflow user identifier.                                                                  |
+| `creationdate`   | Date and time the event occurred.                                                                |
+| `postid`         | Associated post identifier when applicable.                                                      |
+| `action`         | Activity type such as asked, commented, voted, accepted answer, or idle.                         |
+| `score`          | Points assigned to the current event based on the scoring rules.                                 |
+| `tot`            | Running cumulative score after applying all previous events and inactivity penalties.            |
+| `idle_score`     | Daily inactivity indicator used to track idle periods.                                           |
+| `tot_idle_score` | Running inactivity counter used to determine when a 30-day penalty should be applied.            |
+| `rwn`            | Sequential event number generated using `ROW_NUMBER()` to ensure deterministic processing order. |
+
 Immediately following the seed record, the user reaches thirty consecutive idle days, causing the score to decrease from 745 to 740 and the inactivity counter to reset. On January 25, 2022, the user becomes active again by asking a question and posting multiple comments, increasing the score to 761. Subsequent periods of activity and inactivity continue to adjust the score, with comments, answers, and votes increasing the total while prolonged inactivity triggers periodic five-point deductions. By May 2022, renewed participation raises the user's score to 785, illustrating how the system rewards continued engagement while gradually reducing the score of dormant accounts.
 
 
