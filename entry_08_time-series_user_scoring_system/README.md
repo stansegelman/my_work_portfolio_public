@@ -1,3 +1,21 @@
+# Entry 08 - Time-Series User Scoring System
+
+## Overview
+
+One of the challenges in community-driven platforms is measuring user engagement over time rather than evaluating isolated events. A user may be highly active for several months, become inactive for an extended period, and later return to regular participation. Traditional reporting often captures activity counts but does not provide a mechanism for measuring long-term engagement trends.
+
+This project implements a Time-Series User Scoring System using the Stack Overflow public dataset. User activities such as asking questions, posting answers, receiving accepted answers, writing comments, and casting votes are converted into a unified chronological event stream. Each event contributes a weighted score that is accumulated over time to produce a historical participation score.
+
+To discourage score inflation from dormant accounts, the system also introduces inactivity penalties. Every thirty consecutive days without activity results in a score reduction, creating a dynamic balance between contribution and inactivity. The result is a continuously evolving score that reflects both historical participation and recent engagement.
+
+The implementation processes millions of records using PostgreSQL recursive queries, window functions, and incremental score persistence. Rather than recalculating the entire history during each execution, previously calculated scores are used as seed records, allowing the system to continue processing from the last known state.
+
+The final output produces a complete historical timeline showing how a user's score changes over time as new activity occurs and inactivity penalties are applied.
+
+
+Each user activity is converted into a scoring event and assigned a predefined weight. Positive contributions increase the score, while prolonged inactivity results in periodic penalties. The following table defines the scoring model used by the system.
+
+
 | Event | Points |
 |--------|--------:|
 | 🟩 Question Asked | +3 |
@@ -8,6 +26,9 @@
 | 🟥 30 Consecutive Idle Days | -5 |
 
 
+The sample below demonstrates how the scoring system evolves over time. The highlighted row at the top represents a previously calculated score loaded from persistent storage. This seed record is used to continue score calculations from the last known state and is not included in the final output. It is shown here only to illustrate how incremental processing resumes from previously calculated data.
+
+Immediately following the seed record, the user reaches thirty consecutive idle days, causing the score to decrease from 745 to 740 and the inactivity counter to reset. On January 25, 2022, the user becomes active again by asking a question and posting multiple comments, increasing the score to 761. Subsequent periods of activity and inactivity continue to adjust the score, with comments, answers, and votes increasing the total while prolonged inactivity triggers periodic five-point deductions. By May 2022, renewed participation raises the user's score to 785, illustrating how the system rewards continued engagement while gradually reducing the score of dormant accounts.
 
 
 "user_id"|"creationdate"|"postid"|"action"|"score"|🟢"tot"|"idle_score"|"tot_idle_score"|"rwn"
