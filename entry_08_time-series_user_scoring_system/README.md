@@ -42,7 +42,9 @@ The sample below demonstrates how the scoring system evolves over time. The row 
 | `tot_idle_score` | Running inactivity counter used to determine when a 30-day penalty should be applied.            |
 | `rwn`            | Sequential event number generated using `ROW_NUMBER()` to ensure deterministic processing order. |
 
-Immediately following the seed record, the user reaches thirty consecutive idle days, causing the score to decrease from 745 to 740 and the inactivity counter to reset. On January 25, 2022, the user becomes active again by asking a question and posting multiple comments, increasing the score to 761. Subsequent periods of activity and inactivity continue to adjust the score, with comments, answers, and votes increasing the total while prolonged inactivity triggers periodic five-point deductions. By May 2022, renewed participation raises the user's score to 785, illustrating how the system rewards continued engagement while gradually reducing the score of dormant accounts.
+Immediately following the seed record, the user reaches thirty consecutive idle days, causing the score to decrease from **745** to **740** and the inactivity counter to reset. On **January 25, 2022**, the user becomes active again by asking a question and posting multiple comments, increasing the score to **761**. Additional comments, votes, and answers continue to raise the score through February and early March, reaching **774** on **February 28, 2022**.
+
+The user then enters another extended inactive period. As the inactivity counter progresses from `-1` to `-29`, a second inactivity penalty is triggered on **March 30, 2022**, reducing the cumulative score from **774** to **769** and resetting the inactivity counter back to zero. Subsequent activity in May once again increases the score, eventually reaching **785**, demonstrating how the system rewards continued participation while gradually reducing the score of dormant accounts through periodic inactivity penalties.
 
 
 "user_id"|"creationdate"|"postid"|"action"|"score"|🟢"tot"|"idle_score"|"tot_idle_score"|"rwn"
