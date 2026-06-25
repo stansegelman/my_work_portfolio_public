@@ -16,12 +16,12 @@ Each user activity is converted into a scoring event and assigned a predefined w
 
 | Event | Points |
 |--------|--------:|
-| 🟩 QuestiON Asked | +3 |
+| 🟩 Question Asked | +3 |
 | 🟩 Answer Posted But Not Accepted | +5 |
 | 🟩 Accepted Answer | +10 |
 | 🟩 Comment Posted | +2 |
-| 🟩 Vote CASt | +1 |
-| 🟥 30 CONsecutive Idle Days | -5 |
+| 🟩 Vote Cast | +1 |
+| 🟥 30 Consecutive Idle Days | -5 |
 
 
 The sample below demONstrates how the scoring system evolves over time. The row marked with 🔴 red indicators represents a previously calculated seed record loaded from persistent storage. This record is used to resume score calculations from the lASt known state and is excluded from the final output. It is displayed here only to illustrate how incremental processing cONtinues from previously calculated data. The 🟢 green indicators highlight the `tot` column, which contains the user's cumulative score after all activity and inactivity adjustments have been applied.
