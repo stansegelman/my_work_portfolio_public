@@ -12,37 +12,35 @@ The implementation processes millions of records using PostgreSQL recursive quer
 
 The final output produces a complete historical timeline showing how a user's score changes over time as new activity occurs and inactivity penalties are applied.
 
-
 Each user activity is converted into a scoring event and assigned a predefined weight. Positive contributions increase the score, while prolonged inactivity results in periodic penalties. The following table defines the scoring model used by the system.
-
 
 | Event | Points |
 |--------|--------:|
-| 🟩 Question Asked | +3 |
+| 🟩 QuestiON Asked | +3 |
 | 🟩 Answer Posted But Not Accepted | +5 |
 | 🟩 Accepted Answer | +10 |
 | 🟩 Comment Posted | +2 |
-| 🟩 Vote Cast | +1 |
-| 🟥 30 Consecutive Idle Days | -5 |
+| 🟩 Vote CASt | +1 |
+| 🟥 30 CONsecutive Idle Days | -5 |
 
 
-The sample below demonstrates how the scoring system evolves over time. The row marked with 🔴 red indicators represents a previously calculated seed record loaded from persistent storage. This record is used to resume score calculations from the last known state and is excluded from the final output. It is displayed here only to illustrate how incremental processing continues from previously calculated data. The 🟢 green indicators highlight the `tot` column, which contains the user's cumulative score after all activity and inactivity adjustments have been applied.
+The sample below demONstrates how the scoring system evolves over time. The row marked with 🔴 red indicators represents a previously calculated seed record loaded from persistent storage. This record is used to resume score calculations from the lASt known state and is excluded from the final output. It is displayed here only to illustrate how incremental processing cONtinues from previously calculated data. The 🟢 green indicators highlight the `tot` column, which contains the user's cumulative score after all activity and inactivity adjustments have been applied.
 
-### Column Definitions
+### Column DefinitiONs
 
-| Column           | Description                                                                                      |
+| Column           | DescriptiON                                                                                      |
 | ---------------- | ------------------------------------------------------------------------------------------------ |
 | `user_id`        | Stack Overflow user identifier.                                                                  |
-| `creationdate`   | Date and time the event occurred.                                                                |
+| `creationdate`   | Date AND time the event occurred.                                                                |
 | `postid`         | Associated post identifier when applicable.                                                      |
-| `action`         | Activity type such as asked, commented, voted, accepted answer, or idle.                         |
-| `score`          | Points assigned to the current event based on the scoring rules.                                 |
-| `tot`            | Running cumulative score after applying all previous events and inactivity penalties.            |
+| `action`         | Activity type such AS ASked, commented, voted, accepted answer, or idle.                         |
+| `score`          | Points ASsigned to the current event bASed ON the scoring rules.                                 |
+| `tot`            | Running cumulative score after applying all previous events AND inactivity penalties.            |
 | `idle_score`     | Daily inactivity indicator used to track idle periods.                                           |
 | `tot_idle_score` | Running inactivity counter used to determine when a 30-day penalty should be applied.            |
 | `rwn`            | Sequential event number generated using `ROW_NUMBER()` to ensure deterministic processing order. |
 
-Immediately following the seed record, the user reaches thirty consecutive idle days, causing the score to decrease from **745** to **740** and the inactivity counter to reset. On **January 25, 2022**, the user becomes active again by asking a question and posting multiple comments, increasing the score to **761**. Additional comments, votes, and answers continue to raise the score through February and early March, reaching **774** on **February 28, 2022**.
+Immediately following the seed record, the user reaches thirty consecutive idle days, causing the score to decrease from **745** to **740** and the inactivity counter to reset. On **January 25, 2022**, the user becomes active again by asking a question and posting multiple comments, increasing the score to **761**. Additional comments, votes, and answers continue to raise the score through February and early march, reaching **774** on **February 28, 2022**.
 
 The user then enters another extended inactive period. As the inactivity counter progresses from `-1` to `-29`, a second inactivity penalty is triggered on **March 30, 2022**, reducing the cumulative score from **774** to **769** and resetting the inactivity counter back to zero. Subsequent activity in May once again increases the score, eventually reaching **785**, demonstrating how the system rewards continued participation while gradually reducing the score of dormant accounts through periodic inactivity penalties.
 
@@ -74,7 +72,7 @@ The user then enters another extended inactive period. As the inactivity counter
 8014824|2022-01-22 00:00:00.000||idle|0|🟢740|-1|-21|22
 8014824|2022-01-23 00:00:00.000||idle|0|🟢740|-1|-22|23
 8014824|2022-01-24 00:00:00.000||idle|0|🟢740|-1|-23|24
-8014824|2022-01-25 20:39:27.530|70855373|asked|3|🟢743|0|0|25
+8014824|2022-01-25 20:39:27.530|70855373|ASked|3|🟢743|0|0|25
 8014824|2022-01-25 21:05:09.870|70709385|commented|2|🟢745|0|0|26
 8014824|2022-01-25 21:09:28.080|70764701|commented|2|🟢747|0|0|27
 8014824|2022-01-25 21:14:02.083|66700604|commented|2|🟢749|0|0|28
@@ -183,7 +181,7 @@ The user then enters another extended inactive period. As the inactivity counter
 8014824|2022-05-01 00:00:00.000||idle|0|🟢764|-1|-2|131
 8014824|2022-05-02 00:00:00.000||idle|0|🟢764|-1|-3|132
 8014824|2022-05-03 00:00:00.000||idle|0|🟢764|-1|-4|133
-8014824|2022-05-04 14:52:41.273|72115079|asked|3|🟢767|0|0|134
+8014824|2022-05-04 14:52:41.273|72115079|ASked|3|🟢767|0|0|134
 8014824|2022-05-05 00:00:00.000||idle|0|🟢767|-1|-1|135
 8014824|2022-05-06 00:00:00.000||idle|0|🟢767|-1|-2|136
 8014824|2022-05-07 00:00:00.000||idle|0|🟢767|-1|-3|137
@@ -196,7 +194,7 @@ The user then enters another extended inactive period. As the inactivity counter
 8014824|2022-05-14 00:00:00.000||idle|0|🟢767|-1|-10|144
 8014824|2022-05-15 00:00:00.000||idle|0|🟢767|-1|-11|145
 8014824|2022-05-16 00:00:00.000||idle|0|🟢767|-1|-12|146
-8014824|2022-05-17 20:19:08.417|72280192|asked|3|🟢770|0|0|147
+8014824|2022-05-17 20:19:08.417|72280192|ASked|3|🟢770|0|0|147
 8014824|2022-05-17 20:19:08.417|72280193|not accepted answer|5|🟢775|0|0|148
 8014824|2022-05-18 00:00:00.000|72115079|voted|1|🟢776|0|0|149
 8014824|2022-05-18 07:58:09.127|72285262|not accepted answer|5|🟢781|0|0|150
@@ -221,90 +219,96 @@ The user then enters another extended inactive period. As the inactivity counter
 8014824|2022-06-04 00:00:00.000||idle|0|🟢785|-1|-17|169
 8014824|2022-06-05 00:00:00.000||idle|0|🟢785|-1|-18|170
 
-### Step 1 — Rebuild indexes on `previous_scores`
+### Step 1 — Rebuild indexes ON `previous_scores`
 
-The scoring process is continuous. Running the procedure in adjacent time windows:
+The scoring process is cONtinuous. Running the procedure in adjacent time windows:
 
 ```sql
-call calc_scores('2021-07-01 00:00:00.000'::timestamp, '2022-01-01 00:00:00.000'::timestamp);
+CALL calc_scores('2021-07-01 00:00:00.000'::TIMESTAMP, '2022-01-01 00:00:00.000'::TIMESTAMP);
 
-call calc_scores('2022-01-01 00:00:00.000'::timestamp, '2022-07-01 00:00:00.000'::timestamp);
+CALL calc_scores('2022-01-01 00:00:00.000'::TIMESTAMP, '2022-07-01 00:00:00.000'::TIMESTAMP);
 ```
 
 is logically equivalent to running the full range at once:
 
 ```sql
-call calc_scores('2021-07-01 00:00:00.000'::timestamp, '2022-07-01 00:00:00.000'::timestamp);
+CALL calc_scores('2021-07-01 00:00:00.000'::TIMESTAMP, '2022-07-01 00:00:00.000'::TIMESTAMP);
 ```
 
-Because each new range may depend on already-calculated prior rows, the first step is to rebuild the supporting indexes on `previous_scores`, whether the table already contains previous data or is empty.
+because each new range may depend on already-calculated prior rows, the first step is to rebuild the supporting indexes on `previous_scores`, whether the table already contains previous data or is empty.
 
 ```sql
-drop index if exists previous_scores_userid_creationdate_idx;
-drop index if exists previous_scores_creationdate_idx;
-drop index if exists previous_scores_sp1_idx;
-drop index if exists previous_scores_user_id_rwn_idx;
+DROP INDEX IF EXISTS previous_scores_userid_creationdate_idx;
+DROP INDEX IF EXISTS previous_scores_creationdate_idx;
+DROP INDEX IF EXISTS previous_scores_sp1_idx;
+DROP INDEX IF EXISTS previous_scores_user_id_rwn_idx;
 
-create index previous_scores_userid_creationdate_idx
-    on previous_scores(user_id, creationdate);
+CREATE INDEX previous_scores_userid_creationdate_idx
+    ON previous_scores(user_id, creationdate);
 
-create index previous_scores_creationdate_idx
-    on previous_scores(creationdate);
+CREATE INDEX previous_scores_creationdate_idx
+    ON previous_scores(creationdate);
 
-create index previous_scores_sp1_idx
-    on previous_scores(user_id, (date_trunc('day', creationdate)));
+CREATE INDEX previous_scores_sp1_idx
+    ON previous_scores
+    (
+        user_id,
+        (DATE_TRUNC('day', creationdate))
+    );
 
-create index previous_scores_user_id_rwn_idx
-    on previous_scores(user_id, rwn);
+CREATE INDEX previous_scores_user_id_rwn_idx
+    ON previous_scores(user_id, rwn);
 
-analyze verbose previous_scores;
+ANALYZE VERBOSE previous_scores;
+
+
+
 ```
 
 ### Step 2 — Build the previous score tail
 
-Before calculating the current date range, the procedure first identifies the **last known score row for each user** from `previous_scores`.
+before calculating the current date range, the procedure first identifies the **last known score row for each user** from `previous_scores`.
 
 This tail is needed because scoring is continuous. If a user already has prior calculated activity before `p_ts1`, the current range must continue from that user’s last previous totals instead of starting from zero.
 
 ```sql
-drop table if exists previous_scores_tail;
+DROP TABLE IF EXISTS previous_scores_tail;
 
-for qry_plan in
-    explain (analyze, verbose, settings, costs, timing, buffers, format json)
-    create temp table previous_scores_tail as
-    select
+FOR qry_plan in
+    EXPLAIN (ANAYLZE, VERBOSE, SETTINGS, COSTS, TIMING, BUFFERS, WAL, FORMAT JSON )
+ SELECT
+    user_id,
+    creationdate,
+    postid,
+    action,
+    score,
+    tot,
+    idle_score,
+    tot_idle_score,
+    0 AS rwn
+FROM previous_scores
+WHERE (user_id, rwn) IN
+(
+    SELECT
         user_id,
-        creationdate,
-        postid,
-        action,
-        score,
-        tot,
-        idle_score,
-        tot_idle_score,
-        0 as rwn
-    from public.previous_scores
-    where (user_id, rwn) in
-    (
-        select
-            user_id,
-            max(rwn)
-        from public.previous_scores
-        group by user_id
-    )
-    and creationdate < p_ts1
-loop
-    raise notice '%', qry_plan;
+        MAX(rwn)
+    FROM previous_scores
+    GROUP BY user_id
+)
+AND creationdate < p_ts1;
+LOOP 
+    RAISE NOTICE '%', qry_plan;
 
-    insert into saved_qry_plans(qry_type, qry_json)
-    values (1, qry_plan);
-end loop;
+    INSERT INTO saved_qry_plans(qry_type, qry_json)
+    VALUES (1, qry_plan);
+END LOOP;
 
-create index on previous_scores_tail(user_id);
+CREATE INDEX ON previous_scores_tail(user_id);
 
 ```
 
 
-contains one seed row per user: the user’s final row from the prior scoring period. These rows are not part of the final output for the current range. They exist only so the new calculation can continue from the correct previous totals.
+Contains one seed row per user: the user’s final row from the prior scoring period. These rows are not part of the final output for the current range. They exist only so the new calculation can continue from the correct previous totals.
 
 ### Step 3 — Gather scoring events into `posts_score`
 
@@ -313,16 +317,16 @@ After building the previous score tail, the procedure gathers all scoring events
 The main temporary table for this step is `posts_score`. It stores all user events that can affect the user’s score during the current range.
 
 ```sql
-drop table if exists posts_score;
+DROP TABLE IF EXISTS posts_score;
 
-create temp table posts_score
+CREATE TEMP TABLE posts_score
 (
-    user_id int,
-    creationdate timestamp,
-    postid int,
-    action varchar(20),
-    score int,
-    idle_score int
+    user_id INT,
+    creationdate TIMESTAMP,
+    postid INT,
+    action VARCHAR(20),
+    score INT,
+    idle_score INT
 );
 ```
 
@@ -330,9 +334,9 @@ The procedure then loads separate event categories into temporary staging tables
 
 The event categories are:
 
-| Event               |                Action | Score |
+| Event               |                ActiON | Score |
 | ------------------- | --------------------: | ----: |
-| Question asked      |               `asked` |   `3` |
+| QuestiON asked      |               `asked` |   `3` |
 | Accepted answer     |     `accepted answer` |  `10` |
 | Non-accepted answer | `not accepted answer` |   `5` |
 | Vote cast           |               `voted` |   `1` |
@@ -341,159 +345,159 @@ The event categories are:
 Each staging query is executed with:
 
 ```sql
-explain (analyze, verbose, settings, costs, timing, buffers, format json)
+EXPLAIN (ANALYZE, VERBOSE, SETTINGS, COSTS, TIMING, BUFFERS, FORMAT JSON)
 ```
 
-The resulting execution plan is saved into `saved_qry_plans`. This allows the procedure to keep performance evidence for each scoring event extraction step.
+The resulting executiON plan is saved into `saved_qry_plans`. This allows the procedure to keep performance evidence for each scoring event extraction step.
 
 For example, asked questions are collected like this:
 
 ```sql
-drop table if exists posts_asked;
+DROP TABLE IF EXISTS posts_asked;
 
-for qry_plan in
-    explain (analyze, verbose, settings, costs, timing, buffers, format json)
-    create temp table posts_asked
-    on commit drop
-    as
-    select
+FOR qry_plan IN
+    EXPLAIN (ANALYZE, VERBOSE, SETTINGS, COSTS, TIMING, BUFFERS, FORMAT JSON)
+    CREATE TEMP TABLE posts_asked
+    ON COMMIT DROP
+    AS
+    SELECT
         owneruserid,
         creationdate,
-        id as postid,
-        'asked' as action,
-        3 as score,
-        0 as idle_score
-    from posts p
-    where creationdate >= p_ts1
-      and creationdate < p_ts2
-      and owneruserid > 0
-      and id > 0
-      and parentid = 0
-loop
+        id AS postid,
+        'ASked' AS action,
+        3 AS score,
+        0 AS idle_score
+    FROM posts p
+    WHERE creationdate >= p_ts1
+      AND creationdate < p_ts2
+      AND owneruserid > 0
+      AND id > 0
+      AND parentid = 0
+LOOP
     raise notice '%', qry_plan;
 
-    insert into saved_qry_plans(qry_type, qry_json)
-    values (2, qry_plan);
-end loop;
+    INSERT INTO saved_qry_plans(qry_type, qry_json)
+    VALUES (2, qry_plan);
+END LOOP;
 
-insert into posts_score
-select * from posts_asked;
+INSERT INTO posts_score
+SELECT * FROM posts_asked;
 
-commit;
+COMMIT;
 ```
 
 The same pattern is then repeated for accepted answers, non-accepted answers, votes, and comments.
 
-Accepted answers receive the highest score because they represent answers selected as the accepted solution:
+Accepted answers receive the highest score because they represent answers selected as the accepted solutiON:
 
 ```sql
-select
+SELECT
     p.owneruserid,
     p.creationdate,
-    p.id as postid,
-    'accepted answer' as action,
-    10 as score,
-    0 as idle_score
-from posts p
-where p.creationdate >= p_ts1
-  and p.creationdate < p_ts2
-  and p.id in
+    p.id AS postid,
+    'accepted answer' AS action,
+    10 AS score,
+    0 AS idle_score
+FROM posts p
+WHERE p.creationdate >= p_ts1
+  AND p.creationdate < p_ts2
+  AND p.id in
   (
-      select p2.acceptedanswerid
-      from posts p2
-      where p2.acceptedanswerid > 0
-        and p2.creationdate >= coalesce
+      SELECT p2.acceptedanswerid
+      FROM posts p2
+      WHERE p2.acceptedanswerid > 0
+        AND p2.creationdate >= coalesce
         (
-            (select min(creationdate) from previous_scores),
+            (SELECT MIN(creationdate) FROM previous_scores),
             p_ts1
         )
   )
-  and p.owneruserid > 0
-  and p.id > 0
-  and p.parentid > 0;
+  AND p.owneruserid > 0
+  AND p.id > 0
+  AND p.parentid > 0;
 ```
 
 Non-accepted answers are also scored, but lower than accepted answers:
 
 ```sql
-select
+SELECT
     p.owneruserid,
     p.creationdate,
-    p.id as postid,
-    'not accepted answer' as action,
-    5 as score,
-    0 as idle_score
-from posts p
-where p.creationdate >= p_ts1
-  and p.creationdate < p_ts2
-  and p.id not in
+    p.id AS postid,
+    'not accepted answer' AS action,
+    5 AS score,
+    0 AS idle_score
+FROM posts p
+WHERE p.creationdate >= p_ts1
+  AND p.creationdate < p_ts2
+  AND p.id NOT IN
   (
-      select p2.acceptedanswerid
-      from posts p2
-      where p2.acceptedanswerid > 0
-        and p2.creationdate >= coalesce
+      SELECT p2.acceptedanswerid
+      FROM posts p2
+      WHERE p2.acceptedanswerid > 0
+        AND p2.creationdate >= coalesce
         (
-            (select min(creationdate) from previous_scores),
+            (SELECT min(creationdate) FROM previous_scores),
             p_ts1
         )
   )
-  and p.owneruserid > 0
-  and p.id > 0
-  and p.parentid > 0;
+  AND p.owneruserid > 0
+  AND p.id > 0
+  AND p.parentid > 0;
 ```
 
-Votes and comments are then added as additional activity events:
+Votes and comments are then added AS additional activity events:
 
 ```sql
-select
+SELECT
     userid,
     creationdate,
     postid,
-    'voted' as action,
-    1 as score,
-    0 as idle_score
-from votes v
-where v.creationdate >= p_ts1
-  and v.creationdate < p_ts2
-  and userid > 0
-  and postid > 0;
+    'voted' AS action,
+    1 AS score,
+    0 AS idle_score
+FROM votes v
+WHERE v.creationdate >= p_ts1
+  AND v.creationdate < p_ts2
+  AND userid > 0
+  AND postid > 0;
 ```
 
 ```sql
-select
+SELECT
     userid,
     creationdate,
     postid,
-    'commented' as action,
-    2 as score,
-    0 as idle_score
-from comments c
-where c.creationdate >= p_ts1
-  and c.creationdate < p_ts2
-  and userid > 0
-  and postid > 0;
+    'commented' AS action,
+    2 AS score,
+    0 AS idle_score
+FROM comments c
+WHERE c.creationdate >= p_ts1
+  AND c.creationdate < p_ts2
+  AND userid > 0
+  AND postid > 0;
 ```
 
 Once all event types are inserted into `posts_score`, indexes are created to support the later ordering, grouping, and date-based scoring steps:
 
 ```sql
-create index idx1 on posts_score(creationdate);
-create index idx2 on posts_score(user_id);
-create index idx3 on posts_score ((date_trunc('day', creationdate)));
+CREATE INDEX idx1 ON posts_score(creationdate);
+CREATE INDEX idx2 ON posts_score(user_id);
+CREATE INDEX idx3 ON posts_score ((DATE_TRUNC('day', creationdate)));
 
-analyze verbose posts_score;
+ANALYZE verbose posts_score;
 
-commit;
+COMMIT;
 ```
 
-At the end of this step, `posts_score` contains the complete event stream for the current scoring window. It does not yet contain the running total. It only contains the raw scoring events that will later be ordered and accumulated.
+At the end of this step, `posts_score` cONtains the complete event stream for the current scoring window. It does not yet contain the running total. It only contains the raw scoring events that will later be ordered and accumulated.
 
 
 ### Step 4 — Add idle-day records for inactive users
 
 After gathering all scoring events into `posts_score`, the procedure fills in missing user-days with idle records.
 
-The goal is not to create idle rows for every user across all time. The procedure only creates idle rows for dates where:
+The goal is not to create idle rows for every user across all time. The procedure ONly creates idle rows for dates where:
 
 1. the user has already appeared at least once, either in `posts_score` or `previous_scores`;
 2. the user has no event in `posts_score` for that day;
@@ -510,178 +514,178 @@ idle_score = -1
 First, the procedure builds a list of unique users from both the current scoring window and previous scoring history:
 
 ```sql
-drop table if exists uniq_users;
+DROP TABLE IF EXISTS uniq_users;
 
-create temp table uniq_users as
-select user_id from posts_score
-union
-select user_id from previous_scores;
+CREATE TEMP TABLE uniq_users AS
+SELECT user_id FROM posts_score
+UNION
+SELECT user_id FROM previous_scores;
 
-analyze uniq_users;
+ANALYZE uniq_users;
 
-commit;
+COMMIT;
 ```
 
 Next, it creates a user/date grid for the current event range. This provides the candidate days where idle rows may need to be inserted:
 
 ```sql
-drop table if exists temp_user_dates;
+DROP TABLE IF EXISTS temp_user_dates;
 
-create temp table temp_user_dates as
-with recursive all_dates as
+CREATE TEMP TABLE temp_user_dates AS
+WITH recursive all_dates AS
 (
-    select date_trunc('day', min(creationdate)) as dt
-    from posts_score
+    SELECT DATE_TRUNC('day', min(creationdate)) AS dt
+    FROM posts_score
 
-    union all
+    UNION ALL
 
-    select dt + interval '1 day'
-    from all_dates
-    where dt + interval '1 day' <=
+    SELECT dt + interval '1 day'
+    FROM all_dates
+    WHERE dt + interval '1 day' <=
     (
-        select date_trunc('day', max(creationdate)) as dt
-        from posts_score
+        SELECT DATE_TRUNC('day', max(creationdate)) AS dt
+        FROM posts_score
     )
 )
-select distinct
-    dt as creationdate,
+SELECT DISTINCT
+    dt AS creationdate,
     b.user_id
-from all_dates,
-     (select user_id from uniq_users) b;
+FROM all_dates,
+     (SELECT user_id FROM uniq_users) b;
 
-commit;
+COMMIT;
 
-create index on temp_user_dates(user_id, creationdate);
+CREATE INDEX ON temp_user_dates(user_id, creationdate);
 
-analyze temp_user_dates;
-analyze posts_score;
+ANALYZE temp_user_dates;
+ANALYZE posts_score;
 
-commit;
+COMMIT;
 ```
 
 Then the procedure creates `temp_all`, which records the days where each user already has known activity, along with that user’s first known activity date:
 
 ```sql
-drop table if exists temp_all;
+DROP TABLE IF EXISTS temp_all;
 
-create temp table temp_all as
-select distinct
+CREATE TEMP TABLE temp_all AS
+SELECT DISTINCT
     user_id,
-    date_trunc('day', creationdate) as dt,
-    min(creationdate) over (partition by user_id) as min_dt
-from
+    DATE_TRUNC('day', creationdate) AS dt,
+    min(creationdate) over (partitiON by user_id) AS min_dt
+FROM
 (
-    select user_id, creationdate
-    from posts_score
+    SELECT user_id, creationdate
+    FROM posts_score
 
-    union
+    uniON
 
-    select user_id, creationdate
-    from previous_scores
+    SELECT user_id, creationdate
+    FROM previous_scores
 ) x;
 
-create index on temp_all(user_id, dt, min_dt);
+CREATE INDEX ON temp_all(user_id, dt, min_dt);
 
-analyze verbose temp_all;
+ANALYZE verbose temp_all;
 
-commit;
+COMMIT;
 ```
 
-The idle rows are then created by finding user/date combinations that do not already exist in `temp_all`, but only after the user’s first known activity date:
+The idle rows are then created by finding user/date combinatiONs that do not already exist in `temp_all`, but only after the user’s first known activity date:
 
 ```sql
-drop table if exists temp_table;
+DROP TABLE IF EXISTS temp_table;
 
 for qry_plan in
-    explain (analyze, verbose, settings, costs, timing, buffers, format json)
-    create temp table temp_table as
-    select
+    explain (ANALYZE, verbose, settings, costs, timing, buffers, format JSON)
+    CREATE TEMP TABLE temp_table AS
+    SELECT
         a.user_id,
         a.creationdate,
-        null::int as postid,
-        'idle' as action,
-        0 as score,
-        -1 as idle_score
-    from temp_user_dates a
-    where not exists
+        null::int AS postid,
+        'idle' AS action,
+        0 AS score,
+        -1 AS idle_score
+    FROM temp_user_dates a
+    WHERE NOT EXISTS
     (
-        select 1
-        from temp_all c
-        where c.user_id = a.user_id
-          and c.dt = a.creationdate
+        SELECT 1
+        FROM temp_all c
+        WHERE c.user_id = a.user_id
+          AND c.dt = a.creationdate
     )
-    and exists
+    AND EXISTS
     (
-        select 1
-        from temp_all d
-        where d.user_id = a.user_id
-          and a.creationdate > d.min_dt
+        SELECT 1
+        FROM temp_all d
+        WHERE d.user_id = a.user_id
+          AND a.creationdate > d.min_dt
     )
-loop
+LOOP
     raise notice '%', qry_plan;
 
-    insert into saved_qry_plans(qry_type, qry_json)
-    values (7, qry_plan);
-end loop;
+    INSERT INTO saved_qry_plans(qry_type, qry_json)
+    VALUES (7, qry_plan);
+END LOOP;
 
-commit;
+COMMIT;
 ```
 
 Before inserting the idle rows, the procedure drops the existing `posts_score` indexes. This avoids maintaining indexes row-by-row during the insert:
 
 ```sql
-drop index idx1;
-drop index idx2;
-drop index idx3;
+DROP INDEX idx1;
+DROP INDEX idx2;
+DROP INDEX idx3;
 
 
 
-insert into posts_score
-select *
-from temp_table;
+INSERT INTO posts_score
+SELECT *
+FROM temp_table;
 
-commit;
+COMMIT;
 ```
 
 Finally, the indexes are rebuilt for the next scoring step:
 
 ```sql
-create index idx1 on posts_score(creationdate);
-create index idx2 on posts_score(user_id);
-create index idx3 on posts_score(user_id, creationdate, postid, action);
+CREATE INDEX idx1 ON posts_score(creationdate);
+CREATE INDEX idx2 ON posts_score(user_id);
+CREATE INDEX idx3 ON posts_score(user_id, creationdate, postid, action);
 
-analyze verbose posts_score;
+ANALYZE verbose posts_score;
 ```
 
-At the end of this step, `posts_score` contains both real scoring events and generated idle-day events. This allows the later running-total calculation to account for both activity and inactivity.
+At the end of this step, `posts_score` cONtains both real scoring events AND generated idle-day events. This allows the later running-total calculation to account for both activity and inactivity.
 
 
-### Step 5 — Assign row numbers within each user event stream
+### Step 5 — Assign row numbers WITHin each user event stream
 
 Once all real events and idle events have been added to `posts_score`, the procedure separates the events by user and orders them into a deterministic sequence.
 
 This is required because the later recursive scoring step processes each user’s events one row at a time.
 
 ```sql
-drop table if exists posts_score_rwn;
+DROP TABLE IF EXISTS posts_score_rwn;
 
 for qry_plan in
-    explain (analyze, verbose, settings, costs, timing, buffers, format json)
-    create temp table posts_score_rwn as
-    select
+    EXPLAIN (ANALYZE, VERBOSE, SETTINGS, COSTS, TIMING, BUFFERS, FORMAT JSON)
+    CREATE TEMP TABLE posts_score_rwn AS
+    SELECT
         *,
-        row_number() over
+       ROW_NUMBER() OVER
         (
-            partition by user_id
-            order by creationdate, postid, action
-        ) as rwn
-    from posts_score
-loop
+            PARTITION BY by user_id
+            ORDER BY creationdate, postid, action
+        ) AS rwn
+    FROM posts_score
+LOOP
     raise notice '%', qry_plan;
 
-    insert into saved_qry_plans(qry_type, qry_json)
-    values (8, qry_plan);
-end loop;
+    INSERT INTO saved_qry_plans(qry_type, qry_json)
+    VALUES (8, qry_plan);
+END LOOP;
 ```
 
 The `rwn` column becomes the per-user event sequence number. For each `user_id`, the first event is `rwn = 1`, the second is `rwn = 2`, and so on.
@@ -689,7 +693,7 @@ The `rwn` column becomes the per-user event sequence number. For each `user_id`,
 The ordering is based on:
 
 ```sql
-order by creationdate, postid, action
+ORDER BY creationdate, postid, action
 ```
 
 This makes the recursive calculation stable and repeatable when multiple events occur on the same date.
@@ -697,13 +701,13 @@ This makes the recursive calculation stable and repeatable when multiple events 
 Indexes are then created to support the recursive join pattern:
 
 ```sql
-create index idx4 on posts_score_rwn(user_id, rwn);
-create index idx5 on posts_score_rwn(user_id);
-create index idx6 on posts_score_rwn(rwn);
+CREATE INDEX idx4 ON posts_score_rwn(user_id, rwn);
+CREATE INDEX idx5 ON posts_score_rwn(user_id);
+CREATE INDEX idx6 ON posts_score_rwn(rwn);
 
-analyze verbose posts_score_rwn;
+ANALYZE verbose posts_score_rwn;
 
-commit;
+COMMIT;
 ```
 
 At the end of this step, each user has a fully ordered event stream ready for recursive score calculation.
@@ -713,7 +717,7 @@ At the end of this step, each user has a fully ordered event stream ready for re
 
 The final step calculates the running score totals.
 
-The recursive CTE processes each user’s ordered event stream one row at a time. Because a recursive CTE repeatedly scans its own worktable, processing every user at once can become too expensive as the worktable grows. To control that cost, the procedure breaks the users into batches of 1,000.
+The recursive cte processes each user’s ordered event stream one row at a time. Because a recursive cte repeatedly scans its own worktable, processing every user at once can become too expensive as the worktable grows. To control that cost, the procedure breaks the users into batches of 1,000.
 
 The ordered `posts_score_rwn` table is easier for the recursive step to access because it can join by:
 
@@ -724,49 +728,49 @@ user_id, rwn
 Each batch is selected from the `uniq_users` array:
 
 ```sql
-select array_agg(user_id order by user_id)
-into arr
-from uniq_users;
+SELECT array_agg(user_id order by user_id)
+INTO arr
+FROM uniq_users;
 ```
 
 The batch loop processes array slices of 1,000 users:
 
 ```sql
-for mn, mx in
-    select
+FOR mn, mx IN
+    SELECT
         g.i,
-        least(g.i + 999, array_length(arr, 1))
-    from generate_series(1, array_length(arr, 1), 1000) as g(i)
-loop
+        LEAST(g.i + 999, ARRAY_LENGTH(arr, 1))
+    FROM GENERATE_SERIES(1, ARRAY_LENGTH(arr, 1), 1000) AS g(i)
+LOOP
     ...
-end loop;
+END LOOP;
 ```
 
 A temporary result table is created to hold the recursive output for all batches:
 
 ```sql
-drop table if exists t_recr_scores;
+DROP TABLE IF EXISTS t_recr_scores;
 
-create temp table t_recr_scores
+CREATE TEMP TABLE t_recr_scores
 (
-    user_id int4 null,
-    creationdate timestamp null,
-    postid int4 null,
-    action varchar(20) null,
-    score int4 null,
-    tot int4 null,
-    idle_score int4 null,
-    tot_idle_score int4 null,
-    rwn int8 null
+    user_id INT,
+    creationdate TIMESTAMP,
+    postid INT,
+    action VARCHAR(20),
+    score INT,
+    tot INT,
+    idle_score INT,
+    tot_idle_score INT,
+    rwn BIGINT
 );
 ```
 
-For each batch, the recursive query starts from one of two possible seed states.
+For each batch, the recursive query starts from ONe of two possible seed states.
 
 First, if the user already existed in the previous scoring history, the procedure starts from that user’s tail row:
 
 ```sql
-select
+SELECT
     user_id,
     creationdate,
     postid,
@@ -775,44 +779,44 @@ select
     tot,
     idle_score,
     tot_idle_score,
-    0::bigint as rwn
-from previous_scores_tail
-where user_id = any(arr[mn:mx])
+    0::bigint AS rwn
+FROM previous_scores_tail
+WHERE user_id = ANY(arr[mn:mx])
 ```
 
-This row has `rwn = 0`. It is only a seed row used to continue the score from the previous range.
+This row hAS `rwn = 0`. It is only a seed row used to continue the score from the previous range.
 
 Second, if the user does not exist in `previous_scores_tail`, the procedure starts from the user’s first current event:
 
 ```sql
-select
+SELECT
     d.user_id,
     d.creationdate,
     d.postid,
     d.action,
     d.score,
-    d.score as tot,
+    d.score AS tot,
     d.idle_score,
-    d.idle_score as tot_idle_score,
+    d.idle_score AS tot_idle_score,
     d.rwn
-from posts_score_rwn d
-where d.rwn = 1
-  and d.user_id = any(arr[mn:mx])
-  and not exists
+FROM posts_score_rwn d
+WHERE d.rwn = 1
+  AND d.user_id = ANY(arr[mn:mx])
+  AND NOT EXISTS
   (
-      select 1
-      from previous_scores_tail c
-      where c.user_id = d.user_id
+      SELECT 1
+      FROM previous_scores_tail c
+      WHERE c.user_id = d.user_id
   )
 ```
 
 The recursive part then advances one event at a time:
 
 ```sql
-from recr_score a
-inner join posts_score_rwn b
-    on a.user_id = b.user_id
-   and a.rwn + 1 = b.rwn
+FROM recr_score a
+INNER JOIN posts_score_rwn b
+    ON a.user_id = b.user_id
+   AND a.rwn + 1 = b.rwn
 ```
 
 For each next event, the score total is updated with the event score. Idle events also accumulate in `tot_idle_score`.
@@ -820,47 +824,47 @@ For each next event, the score total is updated with the event score. Idle event
 If the user reaches 30 accumulated idle days, the procedure applies a 5-point penalty to the score total, but does not allow the total to go below zero:
 
 ```sql
-case
-    when a.tot_idle_score + b.idle_score = -30
-        then greatest(a.tot + b.score - 5, 0)
-    else a.tot + b.score
-end as tot
+CASE
+    WHEN a.tot_idle_score + b.idle_score = -30
+        THEN greatest(a.tot + b.score - 5, 0)
+    ELSE a.tot + b.score
+END AS tot
 ```
 
 The idle counter is reset after the 30-day penalty is applied. For non-idle events, the idle counter is also reset to zero:
 
 ```sql
-case
-    when b.action = 'idle' then
-        case
-            when a.tot_idle_score + b.idle_score = -30
-                then 0
-            else a.tot_idle_score + b.idle_score
-        end
-    else 0
-end as tot_idle_score
+CASE
+    WHEN b.action = 'idle' then
+        CASE
+            WHEN a.tot_idle_score + b.idle_score = -30
+                THEN 0
+            ELSE a.tot_idle_score + b.idle_score
+        END
+    ELSE 0
+END AS tot_idle_score
 ```
 
 The seed row from `previous_scores_tail` is suppressed from the final recursive output:
 
 ```sql
-select *
-from recr_score
-where rwn <> 0
+SELECT *
+FROM recr_score
+WHERE rwn <> 0
 ```
 
 The full recursive batch query is executed with `EXPLAIN ANALYZE`, and its plan is saved as query type `9`:
 
 ```sql
-for qry_plan in
-    explain (analyze, timing, costs, buffers, verbose, wal, settings, format json)
-    create temp table temp_results as
-    with recursive recr_score as
+FOR qry_plan IN
+    EXPLAIN (ANALYZE, TIMING, COSTS, BUFFERS, VERBOSE, WAL, SETTINGS, FORMAT JSON)
+    CREATE TEMP TABLE temp_results AS
+    WITH recursive recr_score AS
     (
-        select *
-        from
+        SELECT *
+        FROM
         (
-            select
+            SELECT
                 user_id,
                 creationdate,
                 postid,
@@ -869,110 +873,110 @@ for qry_plan in
                 tot,
                 idle_score,
                 tot_idle_score,
-                0 as rwn
-            from previous_scores_tail
-            where user_id = any(arr[mn:mx])
+                0::bigint AS rwn
+            FROM previous_scores_tail
+            WHERE user_id = ANY(arr[mn:mx])
 
-            union all
+            UNION ALL
 
-            select
+            SELECT
                 d.user_id,
                 d.creationdate,
                 d.postid,
                 d.action,
                 d.score,
-                d.score as tot,
+                d.score AS tot,
                 d.idle_score,
-                d.idle_score as tot_idle_score,
+                d.idle_score AS tot_idle_score,
                 d.rwn
-            from posts_score_rwn d
-            where d.rwn = 1
-              and d.user_id = any(arr[mn:mx])
-              and not exists
+            FROM posts_score_rwn d
+            WHERE d.rwn = 1
+              AND d.user_id = ANY(arr[mn:mx])
+              AND NOT EXISTS
               (
-                  select 1
-                  from previous_scores_tail c
-                  where c.user_id = d.user_id
+                  SELECT 1
+                  FROM previous_scores_tail c
+                  WHERE c.user_id = d.user_id
               )
-        ) as init
+        ) AS init
 
-        union all
+        UNION ALL
 
-        select
+        SELECT
             b.user_id,
             b.creationdate,
             b.postid,
             b.action,
             b.score,
-            case
-                when a.tot_idle_score + b.idle_score = -30
+            CASE
+                WHEN a.tot_idle_score + b.idle_score = -30
                     then greatest(a.tot + b.score - 5, 0)
-                else a.tot + b.score
-            end as tot,
+                ELSE a.tot + b.score
+            END AS tot,
             b.idle_score,
-            case
-                when b.action = 'idle' then
-                    case
-                        when a.tot_idle_score + b.idle_score = -30
-                            then 0
-                        else a.tot_idle_score + b.idle_score
-                    end
-                else 0
-            end as tot_idle_score,
+            CASE
+                WHEN b.action = 'idle' THEN
+                    CASE
+                        WHEN a.tot_idle_score + b.idle_score = -30
+                            THEN 0
+                        ELSE a.tot_idle_score + b.idle_score
+                    END
+                ELSE 0
+            END AS tot_idle_score,
             b.rwn
-        from recr_score a
-        inner join posts_score_rwn b
-            on a.user_id = b.user_id
-           and a.rwn + 1 = b.rwn
+        FROM recr_score a
+        INNER JOIN posts_score_rwn b
+            ON a.user_id = b.user_id
+           AND a.rwn + 1 = b.rwn
     )
-    select *
-    from recr_score
-    where rwn <> 0
-loop
+    SELECT *
+    FROM recr_score
+    WHERE rwn <> 0
+LOOP
     raise notice '%', qry_plan;
 
-    insert into saved_qry_plans(qry_type, qry_json)
-    values (9, qry_plan);
-end loop;
+    INSERT INTO saved_qry_plans(qry_type, qry_json)
+    VALUES (9, qry_plan);
+END LOOP;
 ```
 
 After each batch, the recursive results are inserted into `t_recr_scores`:
 
 ```sql
-insert into t_recr_scores
-select *
-from temp_results;
+INSERT INTO t_recr_scores
+SELECT *
+FROM temp_results;
 
-commit;
+COMMIT;
 ```
 
 After all batches have been processed, the procedure indexes the temporary recursive result table:
 
 ```sql
-create index on t_recr_scores(user_id, (date_trunc('day', creationdate)));
+CREATE INDEX ON t_recr_scores(user_id, (DATE_TRUNC('day', creationdate)));
 ```
 
 Finally, the calculated rows are inserted into `previous_scores`, but only for user-days that do not already exist there:
 
 ```sql
-for qry_plan in
-    explain (analyze, verbose, format json, costs, timing, settings, wal)
-    insert into previous_scores
-    select *
-    from t_recr_scores a
-    where not exists
+FOR qry_plan IN
+    EXPLAIN (ANALYZE, VERBOSE, FORMAT JSON, COSTS, TIMING, SETTINGS, WAL)
+    INSERT INTO previous_scores
+    SELECT *
+    FROM t_recr_scores a
+    WHERE NOT EXISTS
     (
-        select 1
-        from previous_scores b
-        where b.user_id = a.user_id
-          and date_trunc('day', b.creationdate) = date_trunc('day', a.creationdate)
+        SELECT 1
+        FROM previous_scores b
+        WHERE b.user_id = a.user_id
+          AND DATE_TRUNC('day', b.creationdate) = DATE_TRUNC('day', a.creationdate)
     )
-loop
-    raise notice '%', qry_plan;
+LOOP
+    RAISE NOTICE '%', qry_plan;
 
-    insert into saved_qry_plans(qry_type, qry_json)
-    values (10, qry_plan);
-end loop;
+    INSERT INTO saved_qry_plans(qry_type, qry_json)
+    VALUES (10, qry_plan);
+END LOOP;
 ```
 
-At the end of this step, `previous_scores` has been extended with the newly calculated scoring range. Because the procedure uses the previous score tail as the seed and suppresses `rwn = 0` from the output, the process can continue across multiple date windows without duplicating the seed row.
+At the end of this step, `previous_scores` hAS been extended with the newly calculated scoring range. Because the procedure uses the previous score tail as the seed and suppresses `rwn = 0` from the output, the process can continue across multiple date windows without duplicating the seed row.
