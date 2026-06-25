@@ -26,7 +26,7 @@ Each user activity is converted into a scoring event and assigned a predefined w
 
 The sample below demONstrates how the scoring system evolves over time. The row marked with 🔴 red indicators represents a previously calculated seed record loaded from persistent storage. This record is used to resume score calculations from the lASt known state and is excluded from the final output. It is displayed here only to illustrate how incremental processing cONtinues from previously calculated data. The 🟢 green indicators highlight the `tot` column, which contains the user's cumulative score after all activity and inactivity adjustments have been applied.
 
-### Column DefinitiONs
+### Column Definitions
 
 | Column           | DescriptiON                                                                                      |
 | ---------------- | ------------------------------------------------------------------------------------------------ |
@@ -660,7 +660,7 @@ ANALYZE verbose posts_score;
 At the end of this step, `posts_score` contains both real scoring events and generated idle-day events. This allows the later running-total calculation to account for both activity and inactivity.
 
 
-### Step 5 — Assign row numbers WITHin each user event stream
+### Step 5 — Assign row numbers within each user event stream
 
 Once all real events and idle events have been added to `posts_score`, the procedure separates the events by user and orders them into a deterministic sequence.
 
