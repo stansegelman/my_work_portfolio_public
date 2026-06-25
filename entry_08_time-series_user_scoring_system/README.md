@@ -235,7 +235,7 @@ is logically equivalent to running the full range at once:
 CALL calc_scores('2021-07-01 00:00:00.000'::TIMESTAMP, '2022-07-01 00:00:00.000'::TIMESTAMP);
 ```
 
-because each new range may depend on already-calculated prior rows, the first step is to rebuild the supporting indexes on `previous_scores`, whether the table already contains previous data or is empty.
+Because each new range may depend on already-calculated prior rows, the first step is to rebuild the supporting indexes on `previous_scores`, whether the table already contains previous data or is empty.
 
 ```sql
 DROP INDEX IF EXISTS previous_scores_userid_creationdate_idx;
@@ -336,7 +336,7 @@ The event categories are:
 
 | Event               |                ActiON | Score |
 | ------------------- | --------------------: | ----: |
-| QuestiON asked      |               `asked` |   `3` |
+| Question asked      |               `asked` |   `3` |
 | Accepted answer     |     `accepted answer` |  `10` |
 | Non-accepted answer | `not accepted answer` |   `5` |
 | Vote cast           |               `voted` |   `1` |
@@ -348,7 +348,7 @@ Each staging query is executed with:
 EXPLAIN (ANALYZE, VERBOSE, SETTINGS, COSTS, TIMING, BUFFERS, FORMAT JSON)
 ```
 
-The resulting executiON plan is saved into `saved_qry_plans`. This allows the procedure to keep performance evidence for each scoring event extraction step.
+The resulting execution plan is saved into `saved_qry_plans`. This allows the procedure to keep performance evidence for each scoring event extraction step.
 
 For example, asked questions are collected like this:
 
@@ -388,7 +388,7 @@ COMMIT;
 
 The same pattern is then repeated for accepted answers, non-accepted answers, votes, and comments.
 
-Accepted answers receive the highest score because they represent answers selected as the accepted solutiON:
+Accepted answers receive the highest score because they represent answers selected as the accepted solution:
 
 ```sql
 SELECT
@@ -446,7 +446,7 @@ WHERE p.creationdate >= p_ts1
   AND p.parentid > 0;
 ```
 
-Votes and comments are then added AS additional activity events:
+Votes and comments are then added as additional activity events:
 
 ```sql
 SELECT
@@ -657,7 +657,7 @@ CREATE INDEX idx3 ON posts_score(user_id, creationdate, postid, action);
 ANALYZE verbose posts_score;
 ```
 
-At the end of this step, `posts_score` cONtains both real scoring events AND generated idle-day events. This allows the later running-total calculation to account for both activity and inactivity.
+At the end of this step, `posts_score` contains both real scoring events and generated idle-day events. This allows the later running-total calculation to account for both activity and inactivity.
 
 
 ### Step 5 — Assign row numbers WITHin each user event stream
@@ -784,7 +784,7 @@ FROM previous_scores_tail
 WHERE user_id = ANY(arr[mn:mx])
 ```
 
-This row hAS `rwn = 0`. It is only a seed row used to continue the score from the previous range.
+This row has `rwn = 0`. It is only a seed row used to continue the score from the previous range.
 
 Second, if the user does not exist in `previous_scores_tail`, the procedure starts from the user’s first current event:
 
