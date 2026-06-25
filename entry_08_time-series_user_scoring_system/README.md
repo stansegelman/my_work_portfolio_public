@@ -993,4 +993,4 @@ LOOP
 END LOOP;
 ```
 
-At the end of this step, `previous_scores` hAS been extended with the newly calculated scoring range. Because the procedure uses the previous score tail as the seed and suppresses `rwn = 0` from the output, the process can continue across multiple date windows without duplicating the seed row.
+At the end of this step, `previous_scores` has been extended with the newly calculated scoring range. Because the procedure uses the previous score tail as the seed and suppresses `rwn = 0` from the output, the process can continue across multiple date windows without duplicating the seed row.
