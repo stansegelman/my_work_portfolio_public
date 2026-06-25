@@ -949,6 +949,20 @@ FROM temp_results;
 
 COMMIT;
 ```
+The main reason we divide the process into batches of 1000, because if we look at the count.
+
+- ![count](./diagrams/count.jpg)
+
+Thus 150,528,867 records would be too expensive to execute all at once.
+
+I used this website to generate graphics for some of the execution plans: 
+
+[remote website](https://explain.dalibo.com/)
+
+The execution plan is as follows 
+- ![Recursive CTE execution plan](./diagrams/exec_plan.jpg)
+
+On the left-hand side you see the initial step and on the right-hand side the recursive step the cost of everything is too high.
 
 After all batches have been processed, the procedure indexes the temporary recursive result table:
 
