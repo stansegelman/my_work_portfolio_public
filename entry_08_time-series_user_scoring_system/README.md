@@ -24,11 +24,11 @@ Each user activity is converted into a scoring event and assigned a predefined w
 | 🟥 30 Consecutive Idle Days | -5 |
 
 
-The sample below demonstrates how the scoring system evolves over time. The row marked with 🔴 red indicators represents a previously calculated seed record loaded from persistent storage. This record is used to resume score calculations from the last known state and is excluded from the final output. It is displayed here only to illustrate how incremental processing cONtinues from previously calculated data. The 🟢 green indicators highlight the `tot` column, which contains the user's cumulative score after all activity and inactivity adjustments have been applied.
+The sample below demonstrates how the scoring system evolves over time. The row marked with 🔴 red indicators represents a previously calculated seed record loaded from persistent storage. This record is used to resume score calculations from the last known state and is excluded from the final output. It is displayed here only to illustrate how incremental processing continues from previously calculated data. The 🟢 green indicators highlight the `tot` column, which contains the user's cumulative score after all activity and inactivity adjustments have been applied.
 
 ### Column Definitions
 
-| Column           | DescriptiON                                                                                      |
+| Column           | Description                                                                                      |
 | ---------------- | ------------------------------------------------------------------------------------------------ |
 | `user_id`        | Stack Overflow user identifier.                                                                  |
 | `creationdate`   | Date and time the event occurred.                                                                |
@@ -221,7 +221,7 @@ The user then enters another extended inactive period. As the inactivity counter
 
 ### Step 1 — Rebuild indexes ON `previous_scores`
 
-The scoring process is cONtinuous. Running the procedure in adjacent time windows:
+The scoring process is continuous. Running the procedure in adjacent time windows:
 
 ```sql
 CALL calc_scores('2021-07-01 00:00:00.000'::TIMESTAMP, '2022-01-01 00:00:00.000'::TIMESTAMP);
@@ -334,7 +334,7 @@ The procedure then loads separate event categories into temporary staging tables
 
 The event categories are:
 
-| Event               |                ActiON | Score |
+| Event               |                Action | Score |
 | ------------------- | --------------------: | ----: |
 | Question asked      |               `asked` |   `3` |
 | Accepted answer     |     `accepted answer` |  `10` |
@@ -490,7 +490,7 @@ ANALYZE verbose posts_score;
 COMMIT;
 ```
 
-At the end of this step, `posts_score` cONtains the complete event stream for the current scoring window. It does not yet contain the running total. It only contains the raw scoring events that will later be ordered and accumulated.
+At the end of this step, `posts_score` contains the complete event stream for the current scoring window. It does not yet contain the running total. It only contains the raw scoring events that will later be ordered and accumulated.
 
 
 ### Step 4 — Add idle-day records for inactive users
@@ -572,13 +572,13 @@ CREATE TEMP TABLE temp_all AS
 SELECT DISTINCT
     user_id,
     DATE_TRUNC('day', creationdate) AS dt,
-    min(creationdate) over (partitiON by user_id) AS min_dt
+    min(creationdate) over (partition by user_id) AS min_dt
 FROM
 (
     SELECT user_id, creationdate
     FROM posts_score
 
-    uniON
+    union
 
     SELECT user_id, creationdate
     FROM previous_scores
@@ -591,7 +591,7 @@ ANALYZE verbose temp_all;
 COMMIT;
 ```
 
-The idle rows are then created by finding user/date combinatiONs that do not already exist in `temp_all`, but only after the user’s first known activity date:
+The idle rows are then created by finding user/date combinations that do not already exist in `temp_all`, but only after the user’s first known activity date:
 
 ```sql
 DROP TABLE IF EXISTS temp_table;
