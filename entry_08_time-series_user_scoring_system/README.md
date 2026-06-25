@@ -33,7 +33,7 @@ The sample below demONstrates how the scoring system evolves over time. The row 
 | `user_id`        | Stack Overflow user identifier.                                                                  |
 | `creationdate`   | Date AND time the event occurred.                                                                |
 | `postid`         | Associated post identifier when applicable.                                                      |
-| `action`         | Activity type such AS ASked, commented, voted, accepted answer, or idle.                         |
+| `action`         | Activity type such AS asked, commented, voted, accepted answer, or idle.                         |
 | `score`          | Points ASsigned to the current event bASed ON the scoring rules.                                 |
 | `tot`            | Running cumulative score after applying all previous events AND inactivity penalties.            |
 | `idle_score`     | Daily inactivity indicator used to track idle periods.                                           |
@@ -72,7 +72,7 @@ The user then enters another extended inactive period. As the inactivity counter
 8014824|2022-01-22 00:00:00.000||idle|0|🟢740|-1|-21|22
 8014824|2022-01-23 00:00:00.000||idle|0|🟢740|-1|-22|23
 8014824|2022-01-24 00:00:00.000||idle|0|🟢740|-1|-23|24
-8014824|2022-01-25 20:39:27.530|70855373|ASked|3|🟢743|0|0|25
+8014824|2022-01-25 20:39:27.530|70855373|asked|3|🟢743|0|0|25
 8014824|2022-01-25 21:05:09.870|70709385|commented|2|🟢745|0|0|26
 8014824|2022-01-25 21:09:28.080|70764701|commented|2|🟢747|0|0|27
 8014824|2022-01-25 21:14:02.083|66700604|commented|2|🟢749|0|0|28
@@ -181,7 +181,7 @@ The user then enters another extended inactive period. As the inactivity counter
 8014824|2022-05-01 00:00:00.000||idle|0|🟢764|-1|-2|131
 8014824|2022-05-02 00:00:00.000||idle|0|🟢764|-1|-3|132
 8014824|2022-05-03 00:00:00.000||idle|0|🟢764|-1|-4|133
-8014824|2022-05-04 14:52:41.273|72115079|ASked|3|🟢767|0|0|134
+8014824|2022-05-04 14:52:41.273|72115079|asked|3|🟢767|0|0|134
 8014824|2022-05-05 00:00:00.000||idle|0|🟢767|-1|-1|135
 8014824|2022-05-06 00:00:00.000||idle|0|🟢767|-1|-2|136
 8014824|2022-05-07 00:00:00.000||idle|0|🟢767|-1|-3|137
@@ -194,7 +194,7 @@ The user then enters another extended inactive period. As the inactivity counter
 8014824|2022-05-14 00:00:00.000||idle|0|🟢767|-1|-10|144
 8014824|2022-05-15 00:00:00.000||idle|0|🟢767|-1|-11|145
 8014824|2022-05-16 00:00:00.000||idle|0|🟢767|-1|-12|146
-8014824|2022-05-17 20:19:08.417|72280192|ASked|3|🟢770|0|0|147
+8014824|2022-05-17 20:19:08.417|72280192|asked|3|🟢770|0|0|147
 8014824|2022-05-17 20:19:08.417|72280193|not accepted answer|5|🟢775|0|0|148
 8014824|2022-05-18 00:00:00.000|72115079|voted|1|🟢776|0|0|149
 8014824|2022-05-18 07:58:09.127|72285262|not accepted answer|5|🟢781|0|0|150
@@ -364,7 +364,7 @@ FOR qry_plan IN
         owneruserid,
         creationdate,
         id AS postid,
-        'ASked' AS action,
+        'asked' AS action,
         3 AS score,
         0 AS idle_score
     FROM posts p
