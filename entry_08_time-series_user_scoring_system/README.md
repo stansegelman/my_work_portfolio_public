@@ -34,7 +34,7 @@ The sample below demONstrates how the scoring system evolves over time. The row 
 | `creationdate`   | Date and time the event occurred.                                                                |
 | `postid`         | Associated post identifier when applicable.                                                      |
 | `action`         | Activity type such as asked, commented, voted, accepted answer, or idle.                         |
-| `score`          | Points ASsigned to the current event bASed ON the scoring rules.                                 |
+| `score`          | Points assigned to the current event based on the scoring rules.                                 |
 | `tot`            | Running cumulative score after applying all previous events and inactivity penalties.            |
 | `idle_score`     | Daily inactivity indicator used to track idle periods.                                           |
 | `tot_idle_score` | Running inactivity counter used to determine when a 30-day penalty should be applied.            |
