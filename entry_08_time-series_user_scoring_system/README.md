@@ -275,7 +275,7 @@ This tail is needed because scoring is continuous. If a user already has prior c
 DROP TABLE IF EXISTS previous_scores_tail;
 
 FOR qry_plan in
-    EXPLAIN (ANAYLZE, VERBOSE, SETTINGS, COSTS, TIMING, BUFFERS, WAL, FORMAT JSON )
+    EXPLAIN (ANALYZE, VERBOSE, SETTINGS, COSTS, TIMING, BUFFERS, WAL, FORMAT JSON )
  SELECT
     user_id,
     creationdate,
@@ -497,7 +497,7 @@ At the end of this step, `posts_score` contains the complete event stream for th
 
 After gathering all scoring events into `posts_score`, the procedure fills in missing user-days with idle records.
 
-The goal is not to create idle rows for every user across all time. The procedure ONly creates idle rows for dates where:
+The goal is not to create idle rows for every user across all time. The procedure only creates idle rows for dates where:
 
 1. the user has already appeared at least once, either in `posts_score` or `previous_scores`;
 2. the user has no event in `posts_score` for that day;
@@ -676,7 +676,7 @@ for qry_plan in
         *,
        ROW_NUMBER() OVER
         (
-            PARTITION BY by user_id
+            PARTITION BY user_id
             ORDER BY creationdate, postid, action
         ) AS rwn
     FROM posts_score
@@ -765,7 +765,7 @@ CREATE TEMP TABLE t_recr_scores
 );
 ```
 
-For each batch, the recursive query starts from ONe of two possible seed states.
+For each batch, the recursive query starts from one of two possible seed states.
 
 First, if the user already existed in the previous scoring history, the procedure starts from that user’s tail row:
 
